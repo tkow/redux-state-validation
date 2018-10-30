@@ -107,7 +107,7 @@ If you want to map error results to object record please computed feature becaus
 }
 ```
 
-but, these come possible by original array to map object with computed props calculates if we transform as receiving errors soon.These data structure support needs ui-ids from an action ship them in payload or some properties like meta, I don't recommend doing using redux in nomal way, the reason is they may break loosely-coupled structure and the reusability of reducers already existed by additional arguments and error messages are not in same place of input location necessarily.
+but, these restructure from original array are possible by mapping object with computed props, if we transform as receiving errors soon.These data structure support needs ui-ids from an action ship them in payload or to add some properties like meta, I don't recommend to do so using redux in nomal way, the reason is they may break loosely-coupled structure and the reusability of reducers already implmented by additional arguments, and error messages are not necessarily in same place of input location .
 
 # How You Contribute
 

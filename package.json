@@ -1,5 +1,10 @@
 {
   "name": "redux-state-validation",
+  "author": {
+    "name": "tkow",
+    "email": "t.kusama06130220@gmail.com",
+    "url": "https://twitter.com/tkow39"
+  },
   "version": "1.1.2",
   "description": "add validator to reducer result handy",
   "main": "build/main/index.js",
@@ -7,7 +12,13 @@
   "module": "build/module/index.js",
   "repository": "https://github.com/tkow/redux-state-validation",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "redux",
+    "validation",
+    "validator",
+    "redux-validation",
+    "redux-state-validation"
+  ],
   "scripts": {
     "info": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
@@ -50,9 +61,6 @@
   },
   "engines": {
     "node": ">=8.9"
-  },
-  "dependencies": {
-    "sha.js": "^2.4.11"
   },
   "devDependencies": {
     "ava": "^0.25.0",
