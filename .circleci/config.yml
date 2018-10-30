@@ -21,10 +21,8 @@ jobs:
       - run: npm test
       - run: npx nyc report --reporter=lcov | npx codecov
       - run: npm run cov:check
-  "node-latest":
 workflows:
   version: 2
   build:
     jobs:
       - "node-8"
-      - "node-latest"
