@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.7"></a>
+## [1.1.7](https://github.com/tkow/redux-state-validation/compare/v1.1.6...v1.1.7) (2018-10-30)
+
+
+### Bug Fixes
+
+* both capable of npm and yarn ([1ec2a7a](https://github.com/tkow/redux-state-validation/commit/1ec2a7a))
+
+
+
 <a name="1.1.6"></a>
 ## [1.1.6](https://github.com/tkow/redux-state-validation/compare/v1.1.5...v1.1.6) (2018-10-30)
 
