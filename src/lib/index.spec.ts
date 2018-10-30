@@ -47,9 +47,11 @@ test("cleate reducer validation", async t => {
       message: "Invalid PostalCode"
     }
   ]);
+  t.deepEqual(state.postalCode, 0);
   store.dispatch({ type: "SET_NUMBER" });
   state = store.getState();
   t.truthy(state.error.length === 0);
+  t.deepEqual(state.postalCode, 123);
 });
 
 test("cleate reducer validation", async t => {
