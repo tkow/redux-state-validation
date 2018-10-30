@@ -12,16 +12,11 @@ Add validator to reducer's result handy. Common validator have problem that depe
 # Usage
 
 
-## withValidateReducer(reducer:Reducer<State,action:Action>, validator:{
-  id:string
-  validate(state:State): boolean
-}[]):Reducer(state:State,action:Action)
+## withValidateReducer(reducer:Reducer<State,action:Action>, validator:{id:string,validate(state:State): boolean}[]):Reducer(state:State,action:Action)
 
 Type Parameter `Key` is corresponded to errorStateId's value in option which is second arguments of watchRootReducer. this API chains a reducer function to validation callback and if the result's not valid rollback state the previous one with save error object to internal state along configuration.
 
-## watchRootReducer(reducer:Reducer<State,action:Action>,options?:{
-  errorStateId?:string
-}):Reducer(state:State&Record<Key, Error[]>,action:Action)
+## watchRootReducer(reducer:Reducer<State,action:Action>,options?:{errorStateId?:string}):Reducer(state:State&Record<Key, Error[]>,action:Action)
 
 This API writes errors of validate methods to redux state, the depth can be arbitrary as how deep you apply watchRootReducer to selected reducer . This must call after all validate methods in the watchRootReducer applied to reducer's scope.This means we must not call watchRootReducer to get errors of parent's reducers or higher than them.This API must use to watch about child reducers or the reducer itself whether validation methods find errors, otherwise it is possible to start flushing errors to state though some validate method still aren't called  depends on the order of function invokes. Imagine the tree ,this derived one root node has many child nodes and decendants and depth-first search recuring process. Imagine one of these nodes is reducer,and the reducer executes fastest than the chirdlen and return last its'state. The callback set by watchRootReducer run after the reducer's return values, so the reducer can watch about all decendants and itself whether catch errors, therefore first origin node reducer is able to watch all of reducers it includes as decendants. So I highly recomend to control error states at top reducer.
 
