@@ -1,34 +1,40 @@
 {
-  "extends": ["tslint:latest", "tslint-config-prettier", "tslint-immutable"],
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-prettier"
+  ],
   "rules": {
-    "interface-name": [true, "never-prefix"],
+    // "interface-name": [true, "never-prefix"],
     // TODO: allow devDependencies only in **/*.spec.ts files:
     // waiting on https://github.com/palantir/tslint/pull/3708
     "no-implicit-dependencies": [true, "dev"],
-
+    "prefer-method-signature":true,
+    "prefer-function-over-method":false,
+    "unified-signatures":true,
     /* tslint-immutable rules */
     // Recommended built-in rules
+    "callable-types":false,
+    "interface-name":false,
     "no-var-keyword": true,
-    "no-parameter-reassignment": true,
-    "typedef": [true, "call-signature"],
-
+    "no-parameter-reassignment": false,
+    // "typedef": [true, "call-signature"],
     // Immutability rules
-    "readonly-keyword": true,
-    "readonly-array": true,
-    "no-let": true,
-    "no-object-mutation": true,
-    "no-delete": true,
-    "no-method-signature": true,
-
+    "variable-name":false,
+    "readonly-keyword": false,
+    "readonly-array": false,
+    "no-let": false,
+    "no-object-mutation": false,
+    "no-delete": false,
+    "no-method-signature": false,
     // Functional style rules
-    "no-this": true,
-    "no-class": true,
-    "no-mixed-interface": true,
-    "no-expression-statement": [
-      true,
-      { "ignore-prefix": ["console.", "process.exit"] }
-    ],
-    "no-if-statement": true
+    // "no-this": true,
+    // "no-class": true,
+    "no-mixed-interface": false,
+    // "no-expression-statement": [
+    //   true,
+    //   { "ignore-prefix": ["console.", "process.exit"] }
+    // ],
+    "no-if-statement": false
     /* end tslint-immutable rules */
   }
 }
