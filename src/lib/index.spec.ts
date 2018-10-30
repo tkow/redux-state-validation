@@ -16,7 +16,6 @@ const postalReducer = (
     };
   }
   if (action.type === "SET_STRING") {
-    // tslint:disable-next-line:no-console
     return {
       ...state,
       postalCode: "123r"
