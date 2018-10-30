@@ -15,9 +15,9 @@ import {
 
 const postalReducer = (
   state: {
-    postalCode: number;
+    postalCode
   },
-  action: any
+  action
 ) => {
   if (action.type === "SET_NUMBER") {
     return {
@@ -45,8 +45,8 @@ const _validateReducer = withValidateReducer(postalReducer, [
 ]);
 
 const rootReducer = watchRootReducer(_validateReducer, {
-   errorStateId: "hoge"
- });
+  errorStateId: "hoge"
+});
 
 const store = createStore(rootReducer, { postalCode: 0 });
 
@@ -109,9 +109,9 @@ If you want to map error results to object record please computed feature becaus
 
 but, these come possible by original array to map object with computed props calculates if we transform as receiving errors soon.These data structure support needs ui-ids from an action ship them in payload or some properties like meta, I don't recommend doing using redux in nomal way, the reason is they may break loosely-coupled structure and the reusability of reducers already existed by additional arguments and error messages are not in same place of input location necessarily.
 
-# How Contributing
+# How You Contribute
 
-Anyone welcome if you want to help or use it better.
+Anyone welcome if you want to help or use it better.Please contact me or create issue freely.
 
 # License
 
