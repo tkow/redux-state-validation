@@ -19,56 +19,84 @@ interface Reducer<State extends {}, Action> {
   (state: State, action: Action): State;
 }
 
-export let _intenal: IntenalParams<string> = {
-  errorStateId: "error",
-  results: []
-};
-
-export function watchRootReducer<
-  State extends {},
-  Action,
-  Key extends string = "error"
->(
-  reducer: Reducer<State, Action>,
-  config: Config<Key> = {}
-): Reducer<State & Record<Key, Error[]>, Action> {
-  const { errorStateId } = config;
-  if (errorStateId) {
-    _intenal.errorStateId = errorStateId;
+class ValidationWatcher {
+  public get watchRootReducer() {
+    return this._watchRootReducer;
   }
-  return (state, action) => {
-    const nextState = reducer(state, action);
-    const nextErrors = _intenal.results.slice();
-    _intenal.results = [];
-    return {
-      ...(nextState as object),
-      [_intenal.errorStateId]: nextErrors
-    } as State & Record<Key, Error[]>;
-  };
-}
 
-export function withValidateReducer<T, Action>(
-  reducer: (state: T, action: Action) => T,
-  validators: Array<Validator<T>>
-): typeof reducer {
-  return (prev: T, action: Action) => {
-    const next = reducer(prev, action);
-    if (
-      validators.some(validator => {
-        const invalid = !validator.validate(next);
-        if (invalid) {
-          withError(validator.error);
-        }
-        return invalid;
-      })
-    ) {
-      return prev;
-    } else {
-      return next;
+  private internal: IntenalParams<string>;
+
+  constructor(state = {}) {
+    this.internal = {
+      errorStateId: "errors",
+      results: [],
+      ...state
+    };
+  }
+
+  private _withValidateReducer = <T, Action>(
+    reducer: (state: T, action: Action) => T,
+    validators: Array<Validator<T>>
+  ): typeof reducer => {
+    return (prev: T, action: Action) => {
+      const next = reducer(prev, action);
+      if (
+        validators.some(validator => {
+          const invalid = !validator.validate(next);
+          if (invalid) {
+            this.withError(validator.error);
+          }
+          return invalid;
+        })
+      ) {
+        return prev;
+      } else {
+        return next;
+      }
+    };
+  };
+
+  public get withValidateReducer() {
+    return this._withValidateReducer;
+  }
+
+  private _watchRootReducer = <
+    State extends {},
+    Action,
+    Key extends string = "errors"
+  >(
+    reducer: Reducer<State, Action>,
+    config: Config<Key> = {}
+  ): Reducer<State & Record<Key, Error[]>, Action> => {
+    const { errorStateId } = config;
+    if (errorStateId) {
+      this.internal.errorStateId = errorStateId;
     }
+    return (state, action) => {
+      if (errorStateId in state) {
+        delete state[errorStateId];
+      }
+      const nextState = reducer(state, action);
+      const nextErrors = this.internal.results.slice();
+      this.internal.results = [];
+      return {
+        ...(nextState as object),
+        [this.internal.errorStateId]: nextErrors
+      } as State & Record<Key, Error[]>;
+    };
+  };
+
+  private withError(error: Error): void {
+    this.internal.results.push(error);
+  }
+}
+
+export function getInstance() {
+  const { watchRootReducer, withValidateReducer } = new ValidationWatcher();
+  return {
+    watchRootReducer,
+    withValidateReducer
   };
 }
 
-function withError(error: Error): void {
-  _intenal.results.push(error);
-}
+export const { withValidateReducer, watchRootReducer } = getInstance();
