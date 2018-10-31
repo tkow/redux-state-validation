@@ -68,6 +68,12 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-is-not-exported"><a href="classes/validationwatcher.html" class="tsd-kind-icon">Validation<wbr>Watcher</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-has-type-parameter tsd-is-not-exported"><a href="interfaces/config.html" class="tsd-kind-icon">Config</a></li>
@@ -78,194 +84,70 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
-							<h3>Functions</h3>
+							<h3>Variables</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#watchrootreducer" class="tsd-kind-icon">watch<wbr>Root<wbr>Reducer</a></li>
-								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#witherror" class="tsd-kind-icon">with<wbr>Error</a></li>
-								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#withvalidatereducer" class="tsd-kind-icon">with<wbr>Validate<wbr>Reducer</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#watchrootreducer" class="tsd-kind-icon">watch<wbr>Root<wbr>Reducer</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#withvalidatereducer" class="tsd-kind-icon">with<wbr>Validate<wbr>Reducer</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
-							<h3>Object literals</h3>
+							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal"><a href="globals.html#_intenal" class="tsd-kind-icon">_intenal</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#getinstance" class="tsd-kind-icon">get<wbr>Instance</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="watchrootreducer" class="tsd-anchor"></a>
 					<h3>watch<wbr>Root<wbr>Reducer</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">watch<wbr>Root<wbr>Reducer&lt;State, Action, Key&gt;<span class="tsd-signature-symbol">(</span>reducer<span class="tsd-signature-symbol">: </span><a href="interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span>, config<span class="tsd-signature-symbol">?: </span><a href="interfaces/config.html" class="tsd-signature-type">Config</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">, </span><a href="interfaces/error.html" class="tsd-signature-type">Error</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/86b5522/src/lib/index.ts#L27">lib/index.ts:27</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>State<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">__type</span></h4>
-								</li>
-								<li>
-									<h4>Action</h4>
-								</li>
-								<li>
-									<h4>Key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>reducer: <a href="interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> config: <a href="interfaces/config.html" class="tsd-signature-type">Config</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">, </span><a href="interfaces/error.html" class="tsd-signature-type">Error</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
+					<div class="tsd-signature tsd-kind-icon">watch<wbr>Root<wbr>Reducer<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">_watchRootReducer</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/35cb03b/src/lib/index.ts#L102">lib/index.ts:102</a></li>
+						</ul>
+					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
-					<a name="witherror" class="tsd-anchor"></a>
-					<h3>with<wbr>Error</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">with<wbr>Error<span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><a href="interfaces/error.html" class="tsd-signature-type">Error</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/86b5522/src/lib/index.ts#L72">lib/index.ts:72</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>error: <a href="interfaces/error.html" class="tsd-signature-type">Error</a></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="withvalidatereducer" class="tsd-anchor"></a>
 					<h3>with<wbr>Validate<wbr>Reducer</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">with<wbr>Validate<wbr>Reducer&lt;T, Action&gt;<span class="tsd-signature-symbol">(</span>reducer<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span>, validators<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/validator.html" class="tsd-signature-type">Validator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/86b5522/src/lib/index.ts#L50">lib/index.ts:50</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-								<li>
-									<h4>Action</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>reducer: <span class="tsd-signature-type">function</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, action<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>state: <span class="tsd-signature-type">T</span></h5>
-														</li>
-														<li>
-															<h5>action: <span class="tsd-signature-type">Action</span></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<h5>validators: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/validator.html" class="tsd-signature-type">Validator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
-							<ul class="tsd-parameters">
-								<li class="tsd-parameter-siganture">
-									<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, action<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-									</ul>
-									<ul class="tsd-descriptions">
-										<li class="tsd-description">
-											<h4 class="tsd-parameters-title">Parameters</h4>
-											<ul class="tsd-parameters">
-												<li>
-													<h5>state: <span class="tsd-signature-type">T</span></h5>
-												</li>
-												<li>
-													<h5>action: <span class="tsd-signature-type">Action</span></h5>
-												</li>
-											</ul>
-											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-										</li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-					</ul>
+					<div class="tsd-signature tsd-kind-icon">with<wbr>Validate<wbr>Reducer<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">_withValidateReducer</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/35cb03b/src/lib/index.ts#L102">lib/index.ts:102</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Object literals</h2>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal">
-					<a name="_intenal" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagLet">Let</span> _intenal</h3>
-					<div class="tsd-signature tsd-kind-icon">_intenal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/86b5522/src/lib/index.ts#L22">lib/index.ts:22</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="_intenal.errorstateid" class="tsd-anchor"></a>
-						<h3>error<wbr>State<wbr>Id</h3>
-						<div class="tsd-signature tsd-kind-icon">error<wbr>State<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;error&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/86b5522/src/lib/index.ts#L23">lib/index.ts:23</a></li>
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="getinstance" class="tsd-anchor"></a>
+					<h3>get<wbr>Instance</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Instance<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/35cb03b/src/lib/index.ts#L94">lib/index.ts:94</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>watch<wbr>Root<wbr>Reducer<span class="tsd-signature-symbol">: </span><a href="" class="tsd-signature-type">_watchRootReducer</a></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>with<wbr>Validate<wbr>Reducer<span class="tsd-signature-symbol">: </span><a href="" class="tsd-signature-type">_withValidateReducer</a></h5>
+								</li>
 							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="_intenal.results" class="tsd-anchor"></a>
-						<h3>results</h3>
-						<div class="tsd-signature tsd-kind-icon">results<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/86b5522/src/lib/index.ts#L24">lib/index.ts:24</a></li>
-							</ul>
-						</aside>
-					</section>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -279,6 +161,9 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/validationwatcher.html" class="tsd-kind-icon">Validation<wbr>Watcher</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter tsd-is-not-exported">
 						<a href="interfaces/config.html" class="tsd-kind-icon">Config</a>
 					</li>
@@ -294,17 +179,14 @@
 					<li class=" tsd-kind-interface tsd-has-type-parameter tsd-is-not-exported">
 						<a href="interfaces/validator.html" class="tsd-kind-icon">Validator</a>
 					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
+					<li class=" tsd-kind-variable">
 						<a href="globals.html#watchrootreducer" class="tsd-kind-icon">watch<wbr>Root<wbr>Reducer</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#witherror" class="tsd-kind-icon">with<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
+					<li class=" tsd-kind-variable">
 						<a href="globals.html#withvalidatereducer" class="tsd-kind-icon">with<wbr>Validate<wbr>Reducer</a>
 					</li>
-					<li class=" tsd-kind-object-literal">
-						<a href="globals.html#_intenal" class="tsd-kind-icon">_intenal</a>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getinstance" class="tsd-kind-icon">get<wbr>Instance</a>
 					</li>
 				</ul>
 			</nav>
