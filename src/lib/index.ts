@@ -37,6 +37,9 @@ export function watchRootReducer<
     _intenal.errorStateId = errorStateId;
   }
   return (state, action) => {
+    if(errorStateId in state) {
+      delete state[errorStateId]  
+    }
     const nextState = reducer(state, action);
     const nextErrors = _intenal.results.slice();
     _intenal.results = [];
