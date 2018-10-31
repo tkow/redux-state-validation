@@ -1,11 +1,13 @@
 import test from "ava";
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
 import { isNumber } from "util";
 import { watchRootReducer, withValidateReducer } from "./index";
 
 const postalReducer = (
   state: {
     postalCode: number;
+  } = {
+    postalCode: 0
   },
   action: any
 ) => {
@@ -34,13 +36,55 @@ const _validateReducer = withValidateReducer(postalReducer, [
   }
 ]);
 
-test("cleate reducer validation", async t => {
+const identityReducer = (state: string = "hoge", action: { value: string }) => {
+  return action && action.value ? action.value : state;
+};
+
+test("create reducer validation", async t => {
+  const _validateNestReducer = withValidateReducer(postalReducer, [
+    {
+      error: {
+        id: "postalCode",
+        message: "Invalid PostalCode"
+      },
+      validate: _state => {
+        return isNumber(_state.postalCode);
+      }
+    }
+  ]);
+  const rootReducer = watchRootReducer(
+    combineReducers({
+      me: identityReducer,
+      postalState: _validateNestReducer
+    })
+  );
+  const store = createStore(rootReducer, {
+    me: "me",
+    postalState: {
+      postalCode: 0 as number
+    }
+  });
+  store.dispatch({ type: "SET_STRING" });
+  let state = store.getState();
+  t.truthy(state.errors.length === 1);
+  t.deepEqual(state.errors, [
+    {
+      id: "postalCode",
+      message: "Invalid PostalCode"
+    }
+  ]);
+  store.dispatch({ type: "SET_NUMBER" });
+  state = store.getState();
+  t.truthy(state.errors.length === 0);
+});
+
+test("create reducer validation", async t => {
   const rootReducer = watchRootReducer(_validateReducer);
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_STRING" });
   let state = store.getState();
-  t.truthy(state.error.length === 1);
-  t.deepEqual(state.error, [
+  t.truthy(state.errors.length === 1);
+  t.deepEqual(state.errors, [
     {
       id: "postalCode",
       message: "Invalid PostalCode"
@@ -49,11 +93,11 @@ test("cleate reducer validation", async t => {
   t.deepEqual(state.postalCode, 0);
   store.dispatch({ type: "SET_NUMBER" });
   state = store.getState();
-  t.truthy(state.error.length === 0);
+  t.truthy(state.errors.length === 0);
   t.deepEqual(state.postalCode, 123);
 });
 
-test("cleate reducer validation", async t => {
+test("can rename errorStateId", async t => {
   const rootReducer = watchRootReducer(_validateReducer, {
     errorStateId: "hoge"
   });

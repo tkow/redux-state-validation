@@ -26,6 +26,7 @@
     "no-object-mutation": false,
     "no-delete": false,
     "no-method-signature": false,
+    "no-shadowed-variable": false,
     // Functional style rules
     // "no-this": true,
     // "no-class": true,
