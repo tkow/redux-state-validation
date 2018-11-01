@@ -73,7 +73,7 @@ class ValidationWatcher {
       this.internal.errorStateId = errorStateId;
     }
     return (state, action) => {
-      if (errorStateId in state) {
+      if (state && errorStateId in state) {
         delete state[errorStateId];
       }
       const nextState = reducer(state, action);
