@@ -56,7 +56,10 @@ test("create reducer validation", async t => {
     combineReducers({
       me: identityReducer,
       postalState: _validateNestReducer
-    })
+    }),
+    {
+      returnType: "array"
+    }
   );
   const store = createStore(rootReducer, {
     me: "me",
@@ -79,7 +82,9 @@ test("create reducer validation", async t => {
 });
 
 test("create reducer validation", async t => {
-  const rootReducer = watchRootReducer(_validateReducer);
+  const rootReducer = watchRootReducer(_validateReducer, {
+    returnType: "array"
+  });
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_STRING" });
   let state = store.getState();
@@ -99,7 +104,8 @@ test("create reducer validation", async t => {
 
 test("can rename errorStateId", async t => {
   const rootReducer = watchRootReducer(_validateReducer, {
-    errorStateId: "hoge"
+    errorStateId: "hoge",
+    returnType: "array"
   });
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_STRING" });
