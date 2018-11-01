@@ -1,9 +1,9 @@
-interface Error {
+export interface Error {
   id: string;
   message: string;
 }
 
-interface Validator<T> {
+export interface Validator<T> {
   error: Error;
   validate(state: T): boolean;
 }
