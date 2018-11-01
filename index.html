@@ -77,6 +77,9 @@
 				<h2 id="watchrootreducer-reducer-reducerstate-action-action-options-errorstateid-string-reducer-state-staterecordkey-error-action-action-">watchRootReducer(reducer:Reducer&lt;State,action:Action&gt;,options?:{errorStateId?:string}):Reducer(state:State&amp;Record&lt;Key, Error[]&gt;,action:Action)</h2>
 				<p>This API writes errors of validate methods to redux state, the depth can be arbitrary as how deep you apply watchRootReducer to selected reducer . This must call after all validate methods in the watchRootReducer applied to reducer&#39;s scope.This means we must not call watchRootReducer to get errors of parent&#39;s reducers or higher than them.This API must use to watch about child reducers or the reducer itself whether validation methods find errors, otherwise it is possible to start flushing errors to state though some validate method still aren&#39;t called  depends on the order of function invokes. Imagine the tree ,this derived one root node has many child nodes and decendants and depth-first search recuring process. Imagine one of these nodes is reducer,and the reducer executes fastest than the chirdlen and return last its&#39;state. The callback set by watchRootReducer run after the reducer&#39;s return values, so the reducer can watch about all decendants and itself whether catch errors, therefore first origin node reducer is able to watch all of reducers it includes as decendants. So I highly recomend to control error states at top reducer.</p>
 				<p>The example is followed by</p>
+				<h2 id="getinstance-watchrootreducer-withvalidatereducer-">getInstance():{watchRootReducer,withValidateReducer}</h2>
+				<p>getIncstance can recreate redux-state-validation instances have new self inner state apart from another. This is for you want to watch validating multi Reducers in some special reason like having reducers seperated store application, but I recommend that this don&#39;t as possible. I&#39;ll explain later at discussion.</p>
+				<h3 id="object-case-default-">object case(default)</h3>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {
   withValidateReducer,
   watchRootReducer
@@ -126,6 +129,78 @@ store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-strin
 *  the output:
 *  {
 *     postalCode:0,
+*     hoge: {
+*       "postalCode": {
+*         id: "postalCode",
+*         message: "Invalid PostalCode"
+*       }
+*     }
+*  }
+**/</span>
+
+store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-string">"SET_NUMBER"</span> });
+
+<span class="hljs-comment">/**
+*  store.getState()
+*  the output:
+*  {
+*     postalCode:123,
+*     hoge: {}
+*  }
+**/</span>
+</code></pre>
+				<h3 id="array-case">array case</h3>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> {
+  withValidateReducer,
+  watchRootReducer
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-state-validation'</span>
+
+<span class="hljs-keyword">const</span> postalReducer = (
+  state: {
+    postalCode
+  },
+  action
+) =&gt; {
+  <span class="hljs-keyword">if</span> (action.type === <span class="hljs-string">"SET_NUMBER"</span>) {
+    <span class="hljs-keyword">return</span> {
+      ...state,
+      postalCode: <span class="hljs-number">123</span>
+    };
+  }
+  <span class="hljs-keyword">if</span> (action.type === <span class="hljs-string">"SET_STRING"</span>) {
+    <span class="hljs-keyword">return</span> {
+      ...state,
+      postalCode: <span class="hljs-string">"123"</span>
+    };
+  }
+  <span class="hljs-keyword">return</span> state;
+};
+
+<span class="hljs-keyword">const</span> _validateReducer = withValidateReducer(postalReducer, [
+  {
+    error: {
+      id: <span class="hljs-string">"postalCode"</span>,
+      message: <span class="hljs-string">"Invalid PostalCode"</span>
+    },
+    validate: _state =&gt; isNumber(_state.postalCode)
+  }
+]);
+
+<span class="hljs-keyword">const</span> rootReducer = watchRootReducer(_validateReducer, {
+  errorStateId: <span class="hljs-string">"hoge"</span>, {
+    returnType: <span class="hljs-string">'array'</span>
+  }
+});
+
+<span class="hljs-keyword">const</span> store = createStore(rootReducer, { postalCode: <span class="hljs-number">0</span> });
+
+store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-string">"SET_STRING"</span> });
+
+<span class="hljs-comment">/**
+*  store.getState()
+*  the output:
+*  {
+*     postalCode:0,
 *     hoge: [
 *       {
 *         id: "postalCode",
@@ -147,27 +222,8 @@ store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-strin
 **/</span>
 </code></pre>
 				<p>See more detail <a href="https://tkow.github.io/redux-state-validation/">here</a>.</p>
-				<h1 id="discussion-and-future-planning">Discussion and Future Planning</h1>
+				<h1 id="discussion">Discussion</h1>
 				<p>Though I recommend that watchRootReducer should set rootRedducer state, you can create error state at deeper located in nested state.Most case are enough at root only because dispatch methods are always synchronous unless odd acync actions breakes dispatch mutation rules (ordinaly you don&#39;t care mutch. the case does&#39;t happen if you use normally redux, async callbacks waits until process done if it is being executed ).</p>
-				<p>If you want to map error results to object record please computed feature because this library feature is shortage now. I may add transform structure options <code>adhocKey</code> ,has ability to contain some ui ids and to map to error results if I need it, may not so far day . If I make them,I think their data formats like followed by</p>
-				<pre><code class="language-typescript">{
-  ...otherStates,
-  errors: {
-    <span class="hljs-string">'text-input-1'</span>: [
-      {
-         id: <span class="hljs-string">"postalCode"</span>,
-         message: <span class="hljs-string">"Invalid PostalCode"</span>
-      }
-    ],
-    <span class="hljs-string">'text-input-2'</span>: [
-      {
-         id: <span class="hljs-string">"phoneNumberNotDelimiter"</span>,
-         message: <span class="hljs-string">"Invalid PhoneNumber: phoneNnumber needs 11 digits with hyphen"</span>
-      }
-    ],
-  }
-}</code></pre>
-				<p>but, these restructure from original array are possible by mapping object with computed props, if we transform as receiving errors soon.These data structure support needs ui-ids from an action ship them in payload or to add some properties like meta, I don&#39;t recommend to do so using redux in nomal way, the reason is they may break loosely-coupled structure and the reusability of reducers already implmented by additional arguments, and error messages are not necessarily in same place of input location .</p>
 				<h1 id="how-you-contribute">How You Contribute</h1>
 				<p>Anyone welcome if you want to help or use it better.Please contact me or create issue freely.</p>
 				<h1 id="license">License</h1>
@@ -202,6 +258,15 @@ store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-strin
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/validator.html" class="tsd-kind-icon">Validator</a>
 					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#resultvalue" class="tsd-kind-icon">Result<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="globals.html#returntype" class="tsd-kind-icon">Return<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+						<a href="globals.html#withvalidatorstate" class="tsd-kind-icon">With<wbr>Validator<wbr>State</a>
+					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#watchrootreducer" class="tsd-kind-icon">watch<wbr>Root<wbr>Reducer</a>
 					</li>
@@ -210,6 +275,12 @@ store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-strin
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#getinstance" class="tsd-kind-icon">get<wbr>Instance</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#isresultsobject" class="tsd-kind-icon">is<wbr>Results<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#defaultconfig" class="tsd-kind-icon">default<wbr>Config</a>
 					</li>
 				</ul>
 			</nav>

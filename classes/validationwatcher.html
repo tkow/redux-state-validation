@@ -102,6 +102,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private tsd-is-not-exported"><a href="validationwatcher.html#_watchrootreducer" class="tsd-kind-icon">_watch<wbr>Root<wbr>Reducer</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private tsd-is-not-exported"><a href="validationwatcher.html#_withvalidatereducer" class="tsd-kind-icon">_with<wbr>Validate<wbr>Reducer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="validationwatcher.html#nexterrors" class="tsd-kind-icon">next<wbr>Errors</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported"><a href="validationwatcher.html#witherror" class="tsd-kind-icon">with<wbr>Error</a></li>
 							</ul>
 						</section>
@@ -114,19 +115,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Validation<wbr>Watcher<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="validationwatcher.html" class="tsd-signature-type">ValidationWatcher</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Validation<wbr>Watcher<span class="tsd-signature-symbol">(</span>internal<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="validationwatcher.html" class="tsd-signature-type">ValidationWatcher</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/9701665/src/lib/index.ts#L27">lib/index.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/3ec1c4d/src/lib/index.ts#L41">lib/index.ts:41</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> state: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> internal: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 									<ul class="tsd-parameters">
 									</ul>
 								</li>
@@ -141,10 +142,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
 					<a name="internal" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> internal</h3>
-					<div class="tsd-signature tsd-kind-icon">internal<span class="tsd-signature-symbol">:</span> <a href="../interfaces/intenalparams.html" class="tsd-signature-type">IntenalParams</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">internal<span class="tsd-signature-symbol">:</span> <a href="../interfaces/intenalparams.html" class="tsd-signature-type">IntenalParams</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#resultvalue" class="tsd-signature-type">ResultValue</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/9701665/src/lib/index.ts#L27">lib/index.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/3ec1c4d/src/lib/index.ts#L41">lib/index.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -161,7 +162,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/9701665/src/lib/index.ts#L23">lib/index.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/3ec1c4d/src/lib/index.ts#L37">lib/index.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type">_watchRootReducer</a></h4>
@@ -178,7 +179,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/9701665/src/lib/index.ts#L59">lib/index.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/3ec1c4d/src/lib/index.ts#L72">lib/index.ts:72</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type">_withValidateReducer</a></h4>
@@ -192,13 +193,13 @@
 					<a name="_watchrootreducer" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _watch<wbr>Root<wbr>Reducer</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">_watch<wbr>Root<wbr>Reducer&lt;State, Action, Key&gt;<span class="tsd-signature-symbol">(</span>reducer<span class="tsd-signature-symbol">: </span><a href="../interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span>, config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/config.html" class="tsd-signature-type">Config</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/error.html" class="tsd-signature-type">Error</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">_watch<wbr>Root<wbr>Reducer&lt;State, Action, Key, TReturnType&gt;<span class="tsd-signature-symbol">(</span>reducer<span class="tsd-signature-symbol">: </span><a href="../interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span>, config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/config.html" class="tsd-signature-type">Config</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TReturnType</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#withvalidatorstate" class="tsd-signature-type">WithValidatorState</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TReturnType</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/9701665/src/lib/index.ts#L63">lib/index.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/3ec1c4d/src/lib/index.ts#L76">lib/index.ts:76</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -212,6 +213,9 @@
 								<li>
 									<h4>Key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
 								</li>
+								<li>
+									<h4>TReturnType<span class="tsd-signature-symbol">: </span><a href="../globals.html#returntype" class="tsd-signature-type">ReturnType</a></h4>
+								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -219,10 +223,10 @@
 									<h5>reducer: <a href="../interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> config: <a href="../interfaces/config.html" class="tsd-signature-type">Config</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> config: <a href="../interfaces/config.html" class="tsd-signature-type">Config</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TReturnType</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/error.html" class="tsd-signature-type">Error</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/reducer.html" class="tsd-signature-type">Reducer</a><span class="tsd-signature-symbol">&lt;</span><a href="../globals.html#withvalidatorstate" class="tsd-signature-type">WithValidatorState</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">State</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Key</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TReturnType</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -236,7 +240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/9701665/src/lib/index.ts#L37">lib/index.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/3ec1c4d/src/lib/index.ts#L50">lib/index.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -304,6 +308,23 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
+					<a name="nexterrors" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> next<wbr>Errors</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">next<wbr>Errors<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#resultvalue" class="tsd-signature-type">ResultValue</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/3ec1c4d/src/lib/index.ts#L118">lib/index.ts:118</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../globals.html#resultvalue" class="tsd-signature-type">ResultValue</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
 					<a name="witherror" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> with<wbr>Error</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
@@ -313,7 +334,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/9701665/src/lib/index.ts#L89">lib/index.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/3ec1c4d/src/lib/index.ts#L107">lib/index.ts:107</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -362,6 +383,9 @@
 								<a href="validationwatcher.html#_withvalidatereducer" class="tsd-kind-icon">_with<wbr>Validate<wbr>Reducer</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
+								<a href="validationwatcher.html#nexterrors" class="tsd-kind-icon">next<wbr>Errors</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-not-exported">
 								<a href="validationwatcher.html#witherror" class="tsd-kind-icon">with<wbr>Error</a>
 							</li>
 						</ul>
@@ -383,6 +407,15 @@
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="../interfaces/validator.html" class="tsd-kind-icon">Validator</a>
 					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="../globals.html#resultvalue" class="tsd-kind-icon">Result<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-not-exported">
+						<a href="../globals.html#returntype" class="tsd-kind-icon">Return<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../globals.html#withvalidatorstate" class="tsd-kind-icon">With<wbr>Validator<wbr>State</a>
+					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#watchrootreducer" class="tsd-kind-icon">watch<wbr>Root<wbr>Reducer</a>
 					</li>
@@ -391,6 +424,12 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#getinstance" class="tsd-kind-icon">get<wbr>Instance</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="../globals.html#isresultsobject" class="tsd-kind-icon">is<wbr>Results<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="../globals.html#defaultconfig" class="tsd-kind-icon">default<wbr>Config</a>
 					</li>
 				</ul>
 			</nav>
