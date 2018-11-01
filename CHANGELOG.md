@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/tkow/redux-state-validation/compare/v1.2.1...v2.0.0) (2018-11-01)
+
+
+### Features
+
+* default return error value is id and enable it to switch type array or object ([6d51636](https://github.com/tkow/redux-state-validation/commit/6d51636))
+
+
+### BREAKING CHANGES
+
+* default is object, so change returnType option to 'array' to if you want to use
+array
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/tkow/redux-state-validation/compare/v1.2.0...v1.2.1) (2018-11-01)
 

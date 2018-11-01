@@ -1,1 +1,1 @@
-export { withValidateReducer, watchRootReducer,Error,Validator } from "./lib";
+export { withValidateReducer, watchRootReducer, Error, Validator } from "./lib";
