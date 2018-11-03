@@ -71,6 +71,7 @@
     "opn-cli": "^3.1.0",
     "prettier": "^1.14.3",
     "redux": "^4.0.1",
+    "redux-actions": "^2.6.4",
     "standard-version": "^4.4.0",
     "trash-cli": "^1.4.0",
     "tslint": "^5.11.0",

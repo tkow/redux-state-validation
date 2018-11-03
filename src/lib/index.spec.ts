@@ -1,5 +1,6 @@
 import test from "ava";
 import { combineReducers, createStore } from "redux";
+import { handleActions } from "redux-actions";
 import { isNumber } from "util";
 import { watchRootReducer, withValidateReducer } from "./index";
 
@@ -26,6 +27,13 @@ const postalReducer = (
   return state;
 };
 
+const initialStateUndefinedReducer = handleActions(
+  {
+    SET_NUMBER: () => 123
+  },
+  0
+);
+
 const _validateReducer = withValidateReducer(postalReducer, [
   {
     error: {
@@ -39,6 +47,26 @@ const _validateReducer = withValidateReducer(postalReducer, [
 const identityReducer = (state: string = "hoge", action: { value: string }) => {
   return action && action.value ? action.value : state;
 };
+
+test("initial state not filter if the condition is invalid", async t => {
+  const rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          error: {
+            id: "postalCode",
+            message: "Invalid PostalCode"
+          },
+          validate: _state => Number(_state) > 100
+        }
+      ])
+    })
+  );
+  const store = createStore(rootReducer);
+  const state = store.getState();
+  t.truthy(Object.keys(state.errors).length === 0);
+  t.truthy(state.postalCode === 0);
+});
 
 test("whether combineReducers can validate for object", async t => {
   const _validateNestReducer = withValidateReducer(postalReducer, [
