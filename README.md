@@ -4,7 +4,13 @@
 [![GitHub stars](https://img.shields.io/github/stars/tkow/redux-state-validation.svg?style=social&logo=github&label=Stars)](https://github.com/tkow/redux-state-validation)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-![demo](https://raw.github.com/wiki/tkow/redux-state-validation/images/demo/rsv-example.gif)
+# Demo
+
+[codesandbox](https://codesandbox.io/embed/82498npzv9)
+
+<p align="center">
+  <img src="https://raw.github.com/wiki/tkow/redux-state-validation/images/demo/rsv-example.gif" />
+</p>
 
 # Install
 
@@ -252,12 +258,6 @@ const period = withValidateReducer(
 This way is pretty in the point of that validators and reducers are not so tightly-coupled and , no-coupled actionCreator form and the other reducers.
 
 we make the [snippets](https://gist.github.com/tkow/37379682d1b125aaccc03596d22b156f) reducers with handle actions of [redux-actions](https://github.com/redux-utilities/redux-actions).
-
-
-
-# Demo
-
-[codesandbox](https://codesandbox.io/embed/82498npzv9)
 
 # How You Contribute
 
