@@ -226,6 +226,48 @@ store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-strin
 				<p>See more detail <a href="https://tkow.github.io/redux-state-validation/">here</a>.</p>
 				<h1 id="discussion">Discussion</h1>
 				<p>Though I recommend that watchRootReducer should set rootRedducer state, you can create error state at deeper located in nested state.Most case are enough at root only because dispatch methods are always synchronous unless odd acync actions breakes dispatch mutation rules (ordinaly you don&#39;t care mutch. the case does&#39;t happen if you use normally redux, async callbacks waits until process done if it is being executed ).</p>
+				<h1 id="tips">Tips</h1>
+				<p>If you use redux, this library easily is able to be introduced in same reducers directory. Redux structures hav many valiation. Our redux structures.</p>
+				<pre><code>redux/StateName/ - (sagas)
+                 -<span class="ruby"> actions
+</span>                 -<span class="ruby"> reducers
+</span>                 -<span class="ruby"> index</span></code></pre><p>and export all of sets of redux layer from redux directory.
+				so we applied this layer to</p>
+				<pre><code>redux/StateName/ - (sagas)
+                 -<span class="ruby"> actions
+</span>                 -<span class="ruby"> reducers
+</span>                 -<span class="ruby"> validators
+</span>                 -<span class="ruby"> index</span></code></pre><p>It helps us to make redux each state to be able to cast on and off however these application is so big. validators and reducers examples are like bellow (we use typescript so, this example written typescript)</p>
+				<pre><code class="language-typescript"><span class="hljs-comment">//validators.ts</span>
+<span class="hljs-comment">//...</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> period: Validator&lt;ProfileTypes.Episode[<span class="hljs-string">'period'</span>], PeriodValidatorId&gt;[] = [
+  {
+    error: {
+      id: <span class="hljs-string">'Episode/period/'</span>,
+      message: <span class="hljs-string">'Internal: Invalid DateFormat'</span>
+    },
+    validate: <span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
+      <span class="hljs-keyword">let</span> valid = moment(value.from, <span class="hljs-string">'YYYY/MM'</span>).isValid()
+      valid = moment(value.by, <span class="hljs-string">'YYYY/MM'</span>).isValid() &amp;&amp; valid
+      <span class="hljs-keyword">return</span> !!valid
+    }
+  }
+]</code></pre>
+				<pre><code class="language-typescript"><span class="hljs-comment">//reducers.ts</span>
+<span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> validators <span class="hljs-keyword">from</span> <span class="hljs-string">'.validators/'</span>
+<span class="hljs-comment">//...</span>
+<span class="hljs-keyword">const</span> period = withValidateReducer(
+  handleActions(
+    {
+      [actionTypes.SET_PERIOD]: <span class="hljs-function">(<span class="hljs-params">state, { payload }: actionTypes.EpisodeActions['setPeriod']</span>) =&gt;</span> payload!,
+    },
+    initialState.period
+  ),
+  validators.period
+)</code></pre>
+				<p>This way is pretty in the point of that validators and reducers are not so tightly-coupled and , no-coupled actionCreator form and the other reducers.</p>
+				<p>we make the snippets reducers with handle actions of <a href="https://github.com/redux-utilities/redux-actions">redux-actions</a>.</p>
+				<p><a href="https://gist.github.com/tkow/37379682d1b125aaccc03596d22b156f">https://gist.github.com/tkow/37379682d1b125aaccc03596d22b156f</a></p>
 				<h1 id="how-you-contribute">How You Contribute</h1>
 				<p>Anyone welcome if you want to help or use it better.Please contact me or create issue freely.</p>
 				<h1 id="license">License</h1>
