@@ -234,7 +234,7 @@ export const period: Validator<ProfileTypes.Episode['period'], PeriodValidatorId
     validate: (value) => {
       let valid = moment(value.from, 'YYYY/MM').isValid()
       valid = moment(value.by, 'YYYY/MM').isValid() && valid
-      return !!valid
+      return valid
     }
   }
 ]
