@@ -55,7 +55,7 @@ class ValidationWatcher {
       const next = reducer(prev, action);
       if (
         validators.some(validator => {
-          const invalid = !validator.validate(next);
+          const invalid = !validator.validate(next) && prev !== undefined;
           if (invalid) {
             this.withError(validator.error);
           }
