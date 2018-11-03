@@ -190,6 +190,69 @@ See more detail [here](https://tkow.github.io/redux-state-validation/).
 
 Though I recommend that watchRootReducer should set rootRedducer state, you can create error state at deeper located in nested state.Most case are enough at root only because dispatch methods are always synchronous unless odd acync actions breakes dispatch mutation rules (ordinaly you don't care mutch. the case does't happen if you use normally redux, async callbacks waits until process done if it is being executed ).
 
+# Tips
+
+If you use redux, this library easily is able to be introduced in same reducers directory. Redux structures hav many valiation. Our redux structures.
+
+```
+redux/StateName/ - (sagas)
+                 - actions
+                 - reducers
+                 - index
+```
+
+and export all of sets of redux layer from redux directory.
+so we applied this layer to
+
+```
+redux/StateName/ - (sagas)
+                 - actions
+                 - reducers
+                 - validators
+                 - index
+```
+
+It helps us to make redux each state to be able to cast on and off however these application is so big. validators and reducers examples are like bellow (we use typescript so, this example written typescript)
+
+```typescript
+//validators.ts
+//...
+export const period: Validator<ProfileTypes.Episode['period'], PeriodValidatorId>[] = [
+  {
+    error: {
+      id: 'Episode/period/',
+      message: 'Internal: Invalid DateFormat'
+    },
+    validate: (value) => {
+      let valid = moment(value.from, 'YYYY/MM').isValid()
+      valid = moment(value.by, 'YYYY/MM').isValid() && valid
+      return !!valid
+    }
+  }
+]
+```
+
+```typescript
+//reducers.ts
+import * as validators from '.validators/'
+//...
+const period = withValidateReducer(
+  handleActions(
+    {
+      [actionTypes.SET_PERIOD]: (state, { payload }: actionTypes.EpisodeActions['setPeriod']) => payload!,
+    },
+    initialState.period
+  ),
+  validators.period
+)
+```
+
+This way is pretty in the point of that validators and reducers are not so tightly-coupled and , no-coupled actionCreator form and the other reducers.
+
+we make the snippets reducers with handle actions of [redux-actions](https://github.com/redux-utilities/redux-actions).
+
+https://gist.github.com/tkow/37379682d1b125aaccc03596d22b156f
+
 # How You Contribute
 
 Anyone welcome if you want to help or use it better.Please contact me or create issue freely.
