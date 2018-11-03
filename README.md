@@ -18,7 +18,7 @@
 npm i --save redux-state-validation
 ```
 
-stable versions are later than 2.0.0.
+stable versions are newer than 2.0.0.
 
 # redux-state-validation
 
