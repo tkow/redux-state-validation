@@ -10,7 +10,7 @@ Add validator to reducer's result handy. Common validator have problem that depe
 
 # Demo
 
-[codesandbox](https://codesandbox.io/embed/82498npzv99)
+[codesandbox](https://codesandbox.io/embed/82498npzv9)
 
 <p align="center">
   <img src="https://raw.github.com/wiki/tkow/redux-state-validation/images/demo/rsv-example.gif" />
