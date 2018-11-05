@@ -69,11 +69,15 @@
 					<a href="https://codecov.io/gh/tkow/redux-state-validation"><img src="https://codecov.io/gh/tkow/redux-state-validation/branch/master/graph/badge.svg" alt="codecov"></a>
 					<a href="https://github.com/tkow/redux-state-validation"><img src="https://img.shields.io/github/stars/tkow/redux-state-validation.svg?style=social&logo=github&label=Stars" alt="GitHub stars"></a>
 				<a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier"></a></p>
-				<p><img src="https://raw.github.com/wiki/tkow/redux-state-validation/images/demo/rsv-example.gif" alt="demo"></p>
-				<h1 id="install">Install</h1>
-				<pre><code>npm <span class="hljs-selector-tag">i</span> --save redux-state-validation</code></pre><p>stable versions are later than 2.0.0.</p>
-				<h1 id="redux-state-validation">redux-state-validation</h1>
+				<h1 id="why-redux-state-validation-">Why redux-state-validation ?</h1>
 				<p>Add validator to reducer&#39;s result handy. Common validator have problem that depends on form or action thus, will be inclined to be weak by modification or increse redundant definitions.This library is simple to extend state array has arbitrary name (default:errors) with checking error and set the messages after each reducer&#39;s callback.</p>
+				<h1 id="demo">Demo</h1>
+				<p><a href="https://codesandbox.io/embed/82498npzv9">codesandbox</a></p>
+				<p align="center">
+					<img src="https://raw.github.com/wiki/tkow/redux-state-validation/images/demo/rsv-example.gif" />
+				</p>
+				<h1 id="install">Install</h1>
+				<pre><code>npm <span class="hljs-selector-tag">i</span> --save redux-state-validation</code></pre><p>stable versions are newer than 2.1.0.</p>
 				<h1 id="usage">Usage</h1>
 				<h2 id="withvalidatereducer-reducer-reducerstate-action-action-validator-id-string-validate-state-state-boolean-reducer-state-state-action-action-">withValidateReducer(reducer:Reducer&lt;State,action:Action&gt;, validator:{id:string,validate(state:State): boolean}[]):Reducer(state:State,action:Action)</h2>
 				<p>Type Parameter <code>Key</code> is corresponded to errorStateId&#39;s value in option which is second arguments of watchRootReducer. this API chains a reducer function to validation callback and if the result&#39;s not valid rollback state the previous one with save error object to internal state along configuration.</p>
@@ -224,6 +228,80 @@ store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-strin
 *  }
 **/</span>
 </code></pre>
+				<h1 id="action-vlidation">action vlidation</h1>
+				<p>we prepare new feature if the second argument specific your validator it verify the payload like that</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          error: {
+            id: <span class="hljs-string">"postalCode1"</span>,
+            message: <span class="hljs-string">"Invalid PostalCode"</span>
+          },
+          validate: <span class="hljs-function">(<span class="hljs-params">_, action: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">Number</span>(action.value) &gt; <span class="hljs-number">100</span>
+        },
+        {
+          error: {
+            id: <span class="hljs-string">"postalCode2"</span>,
+            message: <span class="hljs-string">"Invalid PostalCode"</span>
+          },
+          validate: _ =&gt; <span class="hljs-literal">false</span>
+        }
+      ])
+    })
+  );
+<span class="hljs-keyword">const</span> store = createStore(rootReducer);
+store.dispatch({
+  <span class="hljs-keyword">type</span>: <span class="hljs-string">"SET_NUMBER"</span>,
+  value: <span class="hljs-number">123</span>
+});
+<span class="hljs-keyword">let</span> state = store.getState();
+t.truthy(<span class="hljs-built_in">Object</span>.keys(state.errors).length === <span class="hljs-number">1</span>);
+t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.errors)[<span class="hljs-number">0</span>]].id ===<span class="hljs-string">"postalCode2"</span>);
+store.dispatch({
+  <span class="hljs-keyword">type</span>: <span class="hljs-string">"SET_NUMBER"</span>,
+  value: <span class="hljs-number">0</span>
+});
+state = store.getState();
+t.truthy(<span class="hljs-built_in">Object</span>.keys(state.errors).length === <span class="hljs-number">1</span>);
+t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.errors)[<span class="hljs-number">0</span>]].id ===<span class="hljs-string">"postalCode1"</span>);</code></pre>
+				<p>this test code imply that with action argument to validate and catch invalid action, reducer doesn&#39;t run and return soon current state for optimize by cutting down processing. If you don&#39;t prefer this procedure, you can get all results of validators using next state an action validator results specific <code>afterReducer:boolean</code> option. So, let this test added to some modifications are like bellow</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">const</span> rootReducer = watchRootReducer(
+  combineReducers({
+    postalCode: withValidateReducer(initialStateUndefinedReducer, [
+      {
+        afterReduce: <span class="hljs-literal">true</span>,
+        error: {
+          id: <span class="hljs-string">"postalCode1"</span>,
+          message: <span class="hljs-string">"Invalid PostalCode"</span>
+        },
+        validate: <span class="hljs-function">(<span class="hljs-params">_, action: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">Number</span>(action.value) &gt; <span class="hljs-number">100</span>
+      },
+      {
+        error: {
+          id: <span class="hljs-string">"postalCode2"</span>,
+          message: <span class="hljs-string">"Invalid PostalCode"</span>
+        },
+        validate: _ =&gt; <span class="hljs-literal">false</span>
+      }])
+    })
+  );
+  <span class="hljs-keyword">const</span> store = createStore(rootReducer);
+  store.dispatch({
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">"SET_NUMBER"</span>,
+    value: <span class="hljs-number">123</span>
+  });
+  <span class="hljs-keyword">let</span> state = store.getState();
+  t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.errors)[<span class="hljs-number">0</span>]].id === <span class="hljs-string">"postalCode2"</span>);
+  t.truthy(<span class="hljs-built_in">Object</span>.keys(state.errors).length === <span class="hljs-number">1</span>);
+  store.dispatch({
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">"SET_NUMBER"</span>,
+    value: <span class="hljs-number">0</span>
+  });
+  state = store.getState();
+  t.truthy(<span class="hljs-built_in">Object</span>.keys(state.errors).length === <span class="hljs-number">2</span>);</code></pre>
+				<p>afterReduce option makes error results both nextState only validator, and with action validator, so you specify afterReduce, you want to do that.</p>
+				<p>But I recommended that reducers needs verified actions are all with action validators and don&#39;t use next state validators. you can satisfy  anything processing only either type reducers if you reducers are correct structure and mapping. Using Action validators are trade-off because you must specify validators for each actions though state validator are always one validaton can be applied to same state.</p>
 				<p>See more detail <a href="https://tkow.github.io/redux-state-validation/">here</a>.</p>
 				<h1 id="discussion">Discussion</h1>
 				<p>Though I recommend that watchRootReducer should set rootRedducer state, you can create error state at deeper located in nested state.Most case are enough at root only because dispatch methods are always synchronous unless odd acync actions breakes dispatch mutation rules (ordinaly you don&#39;t care mutch. the case does&#39;t happen if you use normally redux, async callbacks waits until process done if it is being executed ).</p>
@@ -250,7 +328,7 @@ store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-strin
     validate: <span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
       <span class="hljs-keyword">let</span> valid = moment(value.from, <span class="hljs-string">'YYYY/MM'</span>).isValid()
       valid = moment(value.by, <span class="hljs-string">'YYYY/MM'</span>).isValid() &amp;&amp; valid
-      <span class="hljs-keyword">return</span> !!valid
+      <span class="hljs-keyword">return</span> valid
     }
   }
 ]</code></pre>
@@ -268,8 +346,6 @@ store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-strin
 )</code></pre>
 				<p>This way is pretty in the point of that validators and reducers are not so tightly-coupled and , no-coupled actionCreator form and the other reducers.</p>
 				<p>we make the <a href="https://gist.github.com/tkow/37379682d1b125aaccc03596d22b156f">snippets</a> reducers with handle actions of <a href="https://github.com/redux-utilities/redux-actions">redux-actions</a>.</p>
-				<h1 id="demo">Demo</h1>
-				<p><a href="https://codesandbox.io/embed/82498npzv9">codesandbox</a></p>
 				<h1 id="how-you-contribute">How You Contribute</h1>
 				<p>Anyone welcome if you want to help or use it better.Please contact me or create issue freely.</p>
 				<h1 id="license">License</h1>
@@ -324,6 +400,9 @@ store.dispatch({ <span class="hljs-keyword">type</span>: <span class="hljs-strin
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#isresultsobject" class="tsd-kind-icon">is<wbr>Results<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#partition" class="tsd-kind-icon">partition</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
 						<a href="globals.html#defaultconfig" class="tsd-kind-icon">default<wbr>Config</a>
