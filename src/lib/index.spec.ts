@@ -187,6 +187,118 @@ test("create validation single reducer for array", async t => {
   t.deepEqual(state.postalCode, 123);
 });
 
+test("use action withValidator", async t => {
+  const rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          error: {
+            id: "postalCode",
+            message: "Invalid PostalCode"
+          },
+          validate: (_, action: any) => Number(action.value) > 100
+        }
+      ])
+    })
+  );
+  const store = createStore(rootReducer);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 123
+  });
+  let state = store.getState();
+  t.truthy(Object.keys(state.errors).length === 0);
+  t.deepEqual(state.postalCode, 123);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 0
+  });
+  state = store.getState();
+  t.truthy(Object.keys(state.errors).length === 1);
+  t.deepEqual(state.errors, {
+    postalCode: {
+      id: "postalCode",
+      message: "Invalid PostalCode"
+    }
+  });
+});
+
+test("action validations run before reducers execution and return state soon if action invalid.", async t => {
+  const rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          error: {
+            id: "postalCode1",
+            message: "Invalid PostalCode"
+          },
+          validate: (_, action: any) => Number(action.value) > 100
+        },
+        {
+          error: {
+            id: "postalCode2",
+            message: "Invalid PostalCode"
+          },
+          validate: _ => false
+        }
+      ])
+    })
+  );
+  const store = createStore(rootReducer);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 123
+  });
+  let state = store.getState();
+  t.truthy(Object.keys(state.errors).length === 1);
+  t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode2");
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 0
+  });
+  state = store.getState();
+  t.truthy(Object.keys(state.errors).length === 1);
+  t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode1");
+});
+
+test("use afterReduce if need get all errors set validation", async t => {
+  const rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          afterReduce: true,
+          error: {
+            id: "postalCode1",
+            message: "Invalid PostalCode"
+          },
+          validate: (_, action: any) => Number(action.value) > 100
+        },
+        {
+          error: {
+            id: "postalCode2",
+            message: "Invalid PostalCode"
+          },
+          validate: _ => false
+        }
+      ])
+    })
+  );
+  const store = createStore(rootReducer);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 123
+  });
+  let state = store.getState();
+  t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode2");
+  t.truthy(Object.keys(state.errors).length === 1);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 0
+  });
+  state = store.getState();
+  t.truthy(Object.keys(state.errors).length === 2);
+});
+
 test("can rename errorStateId for object", async t => {
   const rootReducer = watchRootReducer(_validateReducer, {
     errorStateId: "hoge"
