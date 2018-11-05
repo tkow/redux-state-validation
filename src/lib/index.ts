@@ -69,13 +69,15 @@ class ValidationWatcher {
       action: A;
     }
   ) => {
-    return validators.some(validator => {
-      const invalid = !validator.validate(next, action) && prev !== undefined;
-      if (invalid) {
-        this.withError(validator.error);
-      }
-      return invalid;
-    });
+    return validators
+      .map(validator => {
+        const invalid = !validator.validate(next, action) && prev !== undefined;
+        if (invalid) {
+          this.withError(validator.error);
+        }
+        return invalid;
+      })
+      .some(result => result);
   };
 
   private _withValidateReducer = <T, Action>(
