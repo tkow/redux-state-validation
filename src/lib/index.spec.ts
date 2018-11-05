@@ -187,6 +187,42 @@ test("create validation single reducer for array", async t => {
   t.deepEqual(state.postalCode, 123);
 });
 
+test("use action withValidator", async t => {
+  const rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          error: {
+            id: "postalCode",
+            message: "Invalid PostalCode"
+          },
+          validate: (_, action: any) => Number(action.value) > 100
+        }
+      ])
+    })
+  );
+  const store = createStore(rootReducer);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 123
+  });
+  let state = store.getState();
+  t.truthy(Object.keys(state.errors).length === 0);
+  t.deepEqual(state.postalCode, 123);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 0
+  });
+  state = store.getState();
+  t.truthy(Object.keys(state.errors).length === 1);
+  t.deepEqual(state.errors, {
+    postalCode: {
+      id: "postalCode",
+      message: "Invalid PostalCode"
+    }
+  });
+});
+
 test("can rename errorStateId for object", async t => {
   const rootReducer = watchRootReducer(_validateReducer, {
     errorStateId: "hoge"

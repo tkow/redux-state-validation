@@ -3,9 +3,10 @@ export interface Error {
   message: string;
 }
 
-export interface Validator<T> {
+export interface Validator<T, Action = any> {
   error: Error;
-  validate(state: T): boolean;
+  afterReduce?: boolean;
+  validate(state: T, action?: Action): boolean;
 }
 
 type ReturnType = "object" | "array";
@@ -33,6 +34,15 @@ const defaultConfig = {
 type WithValidatorState<State, Key extends string, ReturnType> = State &
   Record<Key, ReturnType extends "object" ? { [id: string]: Error } : Error[]>;
 
+function partition(array, isValid) {
+  return array.reduce(
+    ([pass, fail], elem) => {
+      return isValid(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]];
+    },
+    [[], []]
+  );
+}
+
 class ValidationWatcher {
   public get watchRootReducer() {
     return this._watchRootReducer;
@@ -47,19 +57,50 @@ class ValidationWatcher {
     };
   }
 
+  private isValidate = <T, A>(
+    validators: Array<Validator<T, A>>,
+    {
+      prev,
+      next = prev,
+      action
+    }: {
+      prev: T;
+      next?: T;
+      action: A;
+    }
+  ) => {
+    return validators.some(validator => {
+      const invalid = !validator.validate(next, action) && prev !== undefined;
+      if (invalid) {
+        this.withError(validator.error);
+      }
+      return invalid;
+    });
+  };
+
   private _withValidateReducer = <T, Action>(
     reducer: (state: T, action: Action) => T,
-    validators: Array<Validator<T>>
+    validators: Array<Validator<T, Action>>
   ): typeof reducer => {
     return (prev: T, action: Action) => {
+      const [beforeReduceValidators, afterReduceValidators] = partition(
+        validators,
+        validator => validator.validate.length > 1 && !validator.afterReduce
+      );
+      if (
+        this.isValidate(beforeReduceValidators, {
+          action,
+          prev
+        })
+      ) {
+        return prev;
+      }
       const next = reducer(prev, action);
       if (
-        validators.some(validator => {
-          const invalid = !validator.validate(next) && prev !== undefined;
-          if (invalid) {
-            this.withError(validator.error);
-          }
-          return invalid;
+        this.isValidate(afterReduceValidators, {
+          action,
+          next,
+          prev
         })
       ) {
         return prev;
