@@ -4,6 +4,10 @@
 [![GitHub stars](https://img.shields.io/github/stars/tkow/redux-state-validation.svg?style=social&logo=github&label=Stars)](https://github.com/tkow/redux-state-validation)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
+# Why redux-state-validation ?
+
+Add validator to reducer's result handy. Common validator have problem that depends on form or action thus, will be inclined to be weak by modification or increse redundant definitions.This library is simple to extend state array has arbitrary name (default:errors) with checking error and set the messages after each reducer's callback.
+
 # Demo
 
 [codesandbox](https://codesandbox.io/embed/82498npzv9)
@@ -19,10 +23,6 @@ npm i --save redux-state-validation
 ```
 
 stable versions are newer than 2.0.0.
-
-# redux-state-validation
-
-Add validator to reducer's result handy. Common validator have problem that depends on form or action thus, will be inclined to be weak by modification or increse redundant definitions.This library is simple to extend state array has arbitrary name (default:errors) with checking error and set the messages after each reducer's callback.
 
 # Usage
 
@@ -191,6 +191,91 @@ store.dispatch({ type: "SET_NUMBER" });
 **/
 
 ```
+
+# action vlidation
+
+we prepare new feature if the second argument specific your validator it verify the payload like that
+
+```typescript
+const rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          error: {
+            id: "postalCode1",
+            message: "Invalid PostalCode"
+          },
+          validate: (_, action: any) => Number(action.value) > 100
+        },
+        {
+          error: {
+            id: "postalCode2",
+            message: "Invalid PostalCode"
+          },
+          validate: _ => false
+        }
+      ])
+    })
+  );
+const store = createStore(rootReducer);
+store.dispatch({
+  type: "SET_NUMBER",
+  value: 123
+});
+let state = store.getState();
+t.truthy(Object.keys(state.errors).length === 1);
+t.truthy(state.errors[Object.keys(state.errors)[0]].id ==="postalCode2");
+store.dispatch({
+  type: "SET_NUMBER",
+  value: 0
+});
+state = store.getState();
+t.truthy(Object.keys(state.errors).length === 1);
+t.truthy(state.errors[Object.keys(state.errors)[0]].id ==="postalCode1");
+```
+
+this test code imply that with action argument to validate and catch invalid action, reducer doesn't run and return soon current state for optimize by cutting down processing. If you don't prefer this procedure, you can get all results of validators using next state an action validator results specific `afterReducer:boolean` option. So, let this test added to some modifications are like bellow
+
+```typescript
+const rootReducer = watchRootReducer(
+  combineReducers({
+    postalCode: withValidateReducer(initialStateUndefinedReducer, [
+      {
+        afterReduce: true,
+        error: {
+          id: "postalCode1",
+          message: "Invalid PostalCode"
+        },
+        validate: (_, action: any) => Number(action.value) > 100
+      },
+      {
+        error: {
+          id: "postalCode2",
+          message: "Invalid PostalCode"
+        },
+        validate: _ => false
+      }])
+    })
+  );
+  const store = createStore(rootReducer);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 123
+  });
+  let state = store.getState();
+  t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode2");
+  t.truthy(Object.keys(state.errors).length === 1);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 0
+  });
+  state = store.getState();
+  t.truthy(Object.keys(state.errors).length === 2);
+```
+
+afterReduce option makes error results both nextState only validator, and with action validator, so you specify afterReduce, you want to do that.
+
+But I recommended that reducers needs verified actions are all with action validators and don't use next state validators. you can satisfy  anything processing only either type reducers if you reducers are correct structure and mapping. Using Action validators are trade-off because you must specify validators for each actions though state validator are always one validaton can be applied to same state.
 
 See more detail [here](https://tkow.github.io/redux-state-validation/).
 
