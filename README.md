@@ -22,7 +22,7 @@ Add validator to reducer's result handy. Common validator have problem that depe
 npm i --save redux-state-validation
 ```
 
-stable versions are newer than 2.0.0.
+stable versions are newer than 2.1.0.
 
 # Usage
 
