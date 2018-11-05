@@ -10,7 +10,7 @@ Add validator to reducer's result handy. Common validator have problem that depe
 
 # Demo
 
-[codesandbox](https://codesandbox.io/embed/82498npzv9)
+[codesandbox](https://codesandbox.io/embed/82498npzv99)
 
 <p align="center">
   <img src="https://raw.github.com/wiki/tkow/redux-state-validation/images/demo/rsv-example.gif" />
@@ -192,9 +192,9 @@ store.dispatch({ type: "SET_NUMBER" });
 
 ```
 
-# action vlidation
+# action validation
 
-we prepare new feature if the second argument specific your validator it verify the payload like that
+we prepare new feature equlls and more than 2.1.0 if the second argument specific your validator it verify the payload like that
 
 ```typescript
 const rootReducer = watchRootReducer(
