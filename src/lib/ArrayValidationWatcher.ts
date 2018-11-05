@@ -1,9 +1,9 @@
 import {
   AbstractValidationWatcher,
-  Error,
   InternalParams,
   ResultValue
 } from "./AbstractValidationWather";
+import { Error } from "./types";
 
 // tslint:disable-next-line:max-classes-per-file
 export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {

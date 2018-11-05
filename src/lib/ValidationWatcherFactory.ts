@@ -1,42 +1,25 @@
 import { AbstractValidationWatcher } from "./AbstractValidationWather";
 import { ArrayValidationWatcher } from "./ArrayValidationWatcher";
 import { ObjectValidationWatcher } from "./ObjectValidationWatcher";
-export interface Error {
-  id: string;
-  message: string;
-}
+import { Error, Validator } from "./types";
 
-export interface Validator<T, Action = any> {
-  error: Error;
-  afterReduce?: boolean;
-  idSelecter?(id: number, action: Action): number;
-  idSelecter?(id: string, action: Action): string;
-  validate(state: T, action?: Action): boolean;
-}
-
-export type ReturnType = "object" | "array";
-
-export type ResultValue = Error[] | { [id: string]: Error };
+type ReturnType = "object" | "array";
 
 export interface Config<T extends string, R extends ReturnType> {
   errorStateId?: T;
   returnType?: R;
 }
 
-export interface InternalParams<T extends ResultValue> {
-  results: T;
-}
-
 export interface Reducer<State extends {}, Action> {
   (state: State, action: Action): State;
 }
 
-export const defaultConfig = {
+const defaultConfig = {
   errorStateId: "errors",
   returnType: "object"
 };
 
-export function partition(array, isValid) {
+function partition(array, isValid) {
   return array.reduce(
     ([pass, fail], elem) => {
       return isValid(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]];
@@ -45,7 +28,7 @@ export function partition(array, isValid) {
   );
 }
 
-export type WithValidatorState<State, Key extends string, ReturnType> = State &
+type WithValidatorState<State, Key extends string, ReturnType> = State &
   Record<Key, ReturnType extends "object" ? { [id: string]: Error } : Error[]>;
 
 function isObjectValidatorWatcher(
