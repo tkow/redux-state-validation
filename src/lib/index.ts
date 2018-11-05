@@ -57,7 +57,7 @@ class ValidationWatcher {
     };
   }
 
-  private isValidate = <T, A>(
+  private isInvalid = <T, A>(
     validators: Array<Validator<T, A>>,
     {
       prev,
@@ -90,7 +90,7 @@ class ValidationWatcher {
         validator => validator.validate.length > 1 && !validator.afterReduce
       );
       if (
-        this.isValidate(beforeReduceValidators, {
+        this.isInvalid(beforeReduceValidators, {
           action,
           prev
         })
@@ -99,7 +99,7 @@ class ValidationWatcher {
       }
       const next = reducer(prev, action);
       if (
-        this.isValidate(afterReduceValidators, {
+        this.isInvalid(afterReduceValidators, {
           action,
           next,
           prev
