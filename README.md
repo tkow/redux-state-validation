@@ -22,7 +22,7 @@ Add validator to reducer's result handy. Common validator have problem that depe
 npm i --save redux-state-validation
 ```
 
-stable versions are newer than 2.1.0.
+stable versions equals or newer than 2.1.0.
 
 # Usage
 
@@ -198,7 +198,7 @@ store.dispatch({ type: "SET_NUMBER" });
 
 # action validation
 
-we prepare new feature if the second argument specific your validator it verify the payload like that
+we prepare new feature equlls and more than 2.1.0 if the second argument specific your validator it verify the payload like that
 
 ```typescript
 const rootReducer = watchRootReducer(
