@@ -118,6 +118,8 @@ store.dispatch({ type: "SET_NUMBER" });
 
 ### array case
 
+#### WARNING: this behavior deffer to older version. So ,you need to migrate if you use older versions than 2.2.x.
+
 ```typescript
 import {
   withValidateReducer,
@@ -170,12 +172,14 @@ store.dispatch({ type: "SET_STRING" });
 *  the output:
 *  {
 *     postalCode:0,
-*     hoge: [
-*       {
-*         id: "postalCode",
-*         message: "Invalid PostalCode"
-*       }
-*     ]
+*     hoge: {
+*       postalCode:[
+*         {
+*           id: "postalCode",
+*           message: "Invalid PostalCode"
+*         }
+*       ]
+*     }
 *  }
 **/
 
@@ -186,13 +190,13 @@ store.dispatch({ type: "SET_NUMBER" });
 *  the output:
 *  {
 *     postalCode:123,
-*     hoge: []
+*     hoge: {}
 *  }
 **/
 
 ```
 
-# action vlidation
+# action validation
 
 we prepare new feature if the second argument specific your validator it verify the payload like that
 
