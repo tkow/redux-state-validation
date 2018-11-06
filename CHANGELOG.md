@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/tkow/redux-state-validation/compare/v2.1.0...v3.0.0) (2018-11-06)
+
+
+### Features
+
+* enable id mapping when getting errors ([5b4edc1](https://github.com/tkow/redux-state-validation/commit/5b4edc1))
+* expose ValidatorFactory ([428b0a0](https://github.com/tkow/redux-state-validation/commit/428b0a0))
+
+
+### BREAKING CHANGES
+
+* Errors simple array type are no longer available and errorId tie to errorObject
+Array insted if specifing returnType='array', please concat if you needs array errors after getting
+errors
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/tkow/redux-state-validation/compare/v2.0.4...v2.1.0) (2018-11-05)
 
