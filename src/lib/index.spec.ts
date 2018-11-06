@@ -3,6 +3,7 @@ import { combineReducers, createStore } from "redux";
 import { handleActions } from "redux-actions";
 import { isNumber } from "util";
 import { watchRootReducer, withValidateReducer } from "./index";
+import { Error } from "./types";
 
 const postalReducer = (
   state: {
@@ -154,16 +155,18 @@ test("whether combineReducers can validate for array", async t => {
   });
   store.dispatch({ type: "SET_STRING" });
   let state = store.getState();
-  t.truthy(state.errors.length === 1);
-  t.deepEqual(state.errors, [
-    {
-      id: "postalCode",
-      message: "Invalid PostalCode"
-    }
-  ]);
+  t.truthy((state.errors as { [id: string]: Error[] }).postalCode.length === 1);
+  t.deepEqual(state.errors, {
+    postalCode: [
+      {
+        id: "postalCode",
+        message: "Invalid PostalCode"
+      }
+    ]
+  });
   store.dispatch({ type: "SET_NUMBER" });
   state = store.getState();
-  t.truthy(state.errors.length === 0);
+  t.truthy(Object.keys(state.errors as { [id: string]: Error[] }).length === 0);
 });
 
 test("create validation single reducer for array", async t => {
@@ -173,17 +176,19 @@ test("create validation single reducer for array", async t => {
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_STRING" });
   let state = store.getState();
-  t.truthy(state.errors.length === 1);
-  t.deepEqual(state.errors, [
-    {
-      id: "postalCode",
-      message: "Invalid PostalCode"
-    }
-  ]);
+  t.truthy((state.errors as { [id: string]: Error[] }).postalCode.length === 1);
+  t.deepEqual(state.errors, {
+    postalCode: [
+      {
+        id: "postalCode",
+        message: "Invalid PostalCode"
+      }
+    ]
+  });
   t.deepEqual(state.postalCode, 0);
   store.dispatch({ type: "SET_NUMBER" });
   state = store.getState();
-  t.truthy(state.errors.length === 0);
+  t.truthy(Object.keys(state.errors as { [id: string]: Error[] }).length === 0);
   t.deepEqual(state.postalCode, 123);
 });
 
@@ -326,14 +331,16 @@ test("can rename errorStateId for array", async t => {
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_STRING" });
   let state = store.getState();
-  t.truthy(state.hoge.length === 1);
-  t.deepEqual(state.hoge, [
-    {
-      id: "postalCode",
-      message: "Invalid PostalCode"
-    }
-  ]);
+  t.truthy((state.hoge as { [id: string]: Error[] }).postalCode.length === 1);
+  t.deepEqual(state.hoge, {
+    postalCode: [
+      {
+        id: "postalCode",
+        message: "Invalid PostalCode"
+      }
+    ]
+  });
   store.dispatch({ type: "SET_NUMBER" });
   state = store.getState();
-  t.truthy(state.hoge.length === 0);
+  t.truthy(Object.keys(state.hoge).length === 0);
 });

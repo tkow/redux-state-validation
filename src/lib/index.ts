@@ -1,7 +1,7 @@
 import { ValidationWatcherFactory } from "./ValidationWatcherFactory";
 export { Validator, Error } from "./types";
 
-export {ValidationWatcherFactory}
+export { ValidationWatcherFactory };
 
 export function getInstance() {
   const {

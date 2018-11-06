@@ -1,7 +1,7 @@
 import { AbstractValidationWatcher } from "./AbstractValidationWather";
 import { ArrayValidationWatcher } from "./ArrayValidationWatcher";
 import { ObjectValidationWatcher } from "./ObjectValidationWatcher";
-import { Error, Validator } from "./types";
+import { ArrayResultValue, ObjectResultValue, Validator } from "./types";
 
 type ReturnType = "object" | "array";
 
@@ -29,7 +29,10 @@ function partition(array, isValid) {
 }
 
 type WithValidatorState<State, Key extends string, ReturnType> = State &
-  Record<Key, ReturnType extends "object" ? { [id: string]: Error } : Error[]>;
+  Record<
+    Key,
+    ReturnType extends "object" ? ObjectResultValue : ArrayResultValue
+  >;
 
 function isObjectValidatorWatcher(
   _: AbstractValidationWatcher<"object" | "array">,
@@ -116,7 +119,10 @@ export class ValidationWatcherFactory {
       .map(validator => {
         const invalid = !validator.validate(next, action) && prev !== undefined;
         if (invalid) {
-          this._validationWatcher.withError(validator.error);
+          this._validationWatcher.withError(validator.error, {
+            action,
+            validator
+          });
         }
         return invalid;
       })
