@@ -304,6 +304,63 @@ test("use afterReduce if need get all errors set validation", async t => {
   t.truthy(Object.keys(state.errors).length === 2);
 });
 
+test("use idSelector restructure errors id", async t => {
+  const rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          afterReduce: true,
+          error: {
+            id: "postalCode1",
+            message: "Invalid PostalCode"
+          },
+          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+            (action.meta && action.meta.id) || errorId,
+          validate: (_, action: any) => Number(action.value) > 100
+        },
+        {
+          error: {
+            id: "postalCode2",
+            message: "Invalid PostalCode"
+          },
+          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+            (action.meta && action.meta.id) || errorId,
+          validate: _ => false
+        }
+      ])
+    })
+  );
+  const store = createStore(rootReducer);
+  store.dispatch({
+    meta: {
+      id: "addIdSelector"
+    },
+    type: "SET_NUMBER",
+    value: 0
+  });
+  const state = store.getState();
+  t.truthy(
+    (state.errors.addIdSelector as any).postalCode1.id === "postalCode1"
+  );
+  t.truthy(
+    (state.errors.addIdSelector as any).postalCode2.id === "postalCode2"
+  );
+  t.truthy(Object.keys(state.errors).length === 1);
+  t.truthy(Object.keys(state.errors.addIdSelector).length === 2);
+  t.deepEqual(state.errors, {
+    addIdSelector: {
+      postalCode1: {
+        id: "postalCode1",
+        message: "Invalid PostalCode"
+      },
+      postalCode2: {
+        id: "postalCode2",
+        message: "Invalid PostalCode"
+      }
+    }
+  });
+});
+
 test("can rename errorStateId for object", async t => {
   const rootReducer = watchRootReducer(_validateReducer, {
     errorStateId: "hoge"
