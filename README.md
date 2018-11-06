@@ -8,6 +8,8 @@
 
 Add validator to reducer's result handy. Common validator have problem that depends on form or action thus, will be inclined to be weak by modification or increse redundant definitions.This library is simple to extend state array has arbitrary name (default:errors) with checking error and set the messages after each reducer's callback.
 
+This library for react-native rather than react, but we aim to seemless reuse redux state loosely-coupled each applications with react-native and web.
+
 # Demo
 
 [codesandbox](https://codesandbox.io/embed/82498npzv9)
