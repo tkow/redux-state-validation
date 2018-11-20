@@ -351,7 +351,7 @@ Warning option can enable us to update state even if your validate rules are vio
 
 See the test example.
 
-```
+```typescript
 test("if useing warning option of validator, result are set by payload ", async t => {
   const rootReducer = watchRootReducer(
     combineReducers({
