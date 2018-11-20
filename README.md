@@ -343,6 +343,42 @@ const rootReducer = watchRootReducer(
 **/
 ```
 
+# warning option with validator
+
+Warning option can enable us to update state even if your validate rules are violated unless there are no violated validators without warning options.
+
+See the test example.
+
+```
+test("if useing warning option of validator, result are set by payload ", async t => {
+  const rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          error: {
+            id: "postalCode1",
+            message: "Invalid PostalCode"
+          },
+          validate: (_, action: any) => Number(action.value) < 100,
+          warning: true
+        }
+      ])
+    })
+  );
+  const store = createStore(rootReducer);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 123
+  });
+  const state = store.getState();
+  t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode1");
+  t.truthy(Object.keys(state.errors).length === 1);
+  t.deepEqual(state.postalCode, 123);
+});
+```
+
+this options for the case if input mounting your redux state and you want allow users to input keys until submitting.
+
 So, you can set arbitral ids for getting errors through action input value.
 
 See more detail [here](https://tkow.github.io/redux-state-validation/).
