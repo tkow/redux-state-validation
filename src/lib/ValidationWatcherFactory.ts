@@ -43,17 +43,18 @@ function isObjectValidatorWatcher(
 
 export class ValidationWatcherFactory {
   private _validationWatcher: AbstractValidationWatcher<"object" | "array">;
-
+  private _initialized: boolean = false;
   public withValidateReducer = <T, Action>(
     reducer: (state: T, action: Action) => T,
     validators: Array<Validator<T, Action>>
   ): typeof reducer => {
+    const [beforeReduceValidators, afterReduceValidators] = partition(
+      validators,
+      validator => validator.validate.length > 1 && !validator.afterReduce
+    );
     return (prev: T, action: Action) => {
-      const [beforeReduceValidators, afterReduceValidators] = partition(
-        validators,
-        validator => validator.validate.length > 1 && !validator.afterReduce
-      );
       if (
+        this._initialized &&
         this.isInvalid(beforeReduceValidators, {
           action,
           prev
@@ -63,6 +64,7 @@ export class ValidationWatcherFactory {
       }
       const next = reducer(prev, action);
       if (
+        this._initialized &&
         this.isInvalid(afterReduceValidators, {
           action,
           next,
@@ -90,6 +92,7 @@ export class ValidationWatcherFactory {
       ...config
     } as Required<Config<Key, TReturnType>>;
     this.setWatcherInstance(returnType);
+    this._initialized = true;
     return (state, action) => {
       if (state && errorStateId in state) {
         delete state[errorStateId];
@@ -129,12 +132,12 @@ export class ValidationWatcherFactory {
       .some(result => result);
   };
 
-  private setWatcherInstance<T extends "array" | "object">(type: T) {
+  private setWatcherInstance = <T extends "array" | "object">(type: T) => {
     if (isObjectValidatorWatcher(this._validationWatcher, type)) {
       this._validationWatcher = new ObjectValidationWatcher();
     } else {
       this._validationWatcher = new ArrayValidationWatcher();
     }
     return this._validationWatcher;
-  }
+  };
 }
