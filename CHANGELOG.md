@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/tkow/redux-state-validation/compare/v3.0.0...v3.0.1) (2018-11-20)
+
+
+### Bug Fixes
+
+* **ValidationWatcherFactory.ts:** improve some perfomances and,fix bugs that throw error if first st ([74ec030](https://github.com/tkow/redux-state-validation/commit/74ec030))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/tkow/redux-state-validation/compare/v2.1.0...v3.0.0) (2018-11-06)
 
