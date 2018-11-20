@@ -361,6 +361,35 @@ t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.error
 *    }
 *  }
 **/</span></code></pre>
+				<h1 id="warning-option-with-validator">warning option with validator</h1>
+				<p>Warning option can enable us to update state even if your validate rules are violated unless there are no violated validators without warning options.</p>
+				<p>See the test example.</p>
+				<pre><code class="language-typescript">test(<span class="hljs-string">"if useing warning option of validator, result are set by payload "</span>, <span class="hljs-keyword">async</span> t =&gt; {
+  <span class="hljs-keyword">const</span> rootReducer = watchRootReducer(
+    combineReducers({
+      postalCode: withValidateReducer(initialStateUndefinedReducer, [
+        {
+          error: {
+            id: <span class="hljs-string">"postalCode1"</span>,
+            message: <span class="hljs-string">"Invalid PostalCode"</span>
+          },
+          validate: <span class="hljs-function">(<span class="hljs-params">_, action: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">Number</span>(action.value) &lt; <span class="hljs-number">100</span>,
+          warning: <span class="hljs-literal">true</span>
+        }
+      ])
+    })
+  );
+  <span class="hljs-keyword">const</span> store = createStore(rootReducer);
+  store.dispatch({
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">"SET_NUMBER"</span>,
+    value: <span class="hljs-number">123</span>
+  });
+  <span class="hljs-keyword">const</span> state = store.getState();
+  t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.errors)[<span class="hljs-number">0</span>]].id === <span class="hljs-string">"postalCode1"</span>);
+  t.truthy(<span class="hljs-built_in">Object</span>.keys(state.errors).length === <span class="hljs-number">1</span>);
+  t.deepEqual(state.postalCode, <span class="hljs-number">123</span>);
+});</code></pre>
+				<p>this options for the case if input mounting your redux state and you want allow users to input keys until submitting.</p>
 				<p>So, you can set arbitral ids for getting errors through action input value.</p>
 				<p>See more detail <a href="https://tkow.github.io/redux-state-validation/">here</a>.</p>
 				<h1 id="discussion">Discussion</h1>
