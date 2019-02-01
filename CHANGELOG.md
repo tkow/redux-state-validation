@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="4.3.0"></a>
+# [4.3.0](https://github.com/tkow/redux-state-validation/compare/v4.2.0...v4.3.0) (2019-02-01)
+
+
+### Features
+
+* relaxed type of arguments about idSelector ([04b2cc3](https://github.com/tkow/redux-state-validation/commit/04b2cc3))
+
+
+
 <a name="4.2.0"></a>
 # [4.2.0](https://github.com/tkow/redux-state-validation/compare/v4.0.0...v4.2.0) (2019-02-01)
 
