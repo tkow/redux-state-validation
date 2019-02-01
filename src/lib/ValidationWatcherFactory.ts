@@ -3,9 +3,9 @@ import { ArrayValidationWatcher } from "./ArrayValidationWatcher";
 import { ObjectValidationWatcher } from "./ObjectValidationWatcher";
 import {
   ArrayResultValue,
-  Error,
   ObjectResultValue,
   ReduxAction,
+  ResultValue,
   Validator
 } from "./types";
 
@@ -87,9 +87,9 @@ export class ValidationWatcherFactory {
     };
   };
 
-  public createStaticValidator<T, Action extends ReduxAction>(
+  public createStaticValidator = <T, Action extends ReduxAction>(
     validators: { [stateName in keyof T]: Array<Validator<T, Action>> }
-  ) {
+  ) => {
     return (value: T) => {
       const stateValidationResults = Object.keys(validators).reduce(
         (current, key, _index) => {
@@ -117,21 +117,16 @@ export class ValidationWatcherFactory {
         },
         {}
       );
-      return this.setValidatorResults(stateValidationResults)
+      return this.setValidatorResults(stateValidationResults);
     };
-  }
+  };
 
-  public setValidatorResults(
-    errors:
-      | Error[]
-      | { [key: string]: { [key: string]: Error } }
-      | { [id: string]: string }
-  ) {
+  public setValidatorResults = (errors: ResultValue) => {
     return {
       payload: errors,
       type: this.actionTypes.SET_VALIDATIONS
     };
-  }
+  };
 
   public watchRootReducer = <
     State extends {},

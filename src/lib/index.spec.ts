@@ -2,7 +2,12 @@ import test from "ava";
 import { combineReducers, createStore } from "redux";
 import { handleActions } from "redux-actions";
 import { isNumber } from "util";
-import { watchRootReducer, withValidateReducer } from "./index";
+import {
+  createStaticValidator,
+  setValidatorResults,
+  watchRootReducer,
+  withValidateReducer
+} from "./index";
 import { Error } from "./types";
 
 const postalReducer = (
@@ -315,6 +320,15 @@ test("if useing strict option of validator, result are set by payload ", async t
           },
           strict: true,
           validate: (_, action: any) => Number(action.value) < 100
+        },
+        {
+          afterReduce: true,
+          error: {
+            id: "postalCode2",
+            message: "Invalid PostalCode"
+          },
+          strict: true,
+          validate: (_, _action: any) => false
         }
       ])
     })
@@ -324,8 +338,16 @@ test("if useing strict option of validator, result are set by payload ", async t
     type: "SET_NUMBER",
     value: 123
   });
-  const state = store.getState();
+  let state = store.getState();
   t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode1");
+  t.truthy(Object.keys(state.errors).length === 1);
+  t.deepEqual(state.postalCode, 0);
+  store.dispatch({
+    type: "SET_NUMBER",
+    value: 1
+  });
+  state = store.getState();
+  t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode2");
   t.truthy(Object.keys(state.errors).length === 1);
   t.deepEqual(state.postalCode, 0);
 });
@@ -482,4 +504,35 @@ test("can rename errorStateId for array", async t => {
   store.dispatch({ type: "SET_NUMBER" });
   state = store.getState();
   t.truthy(Object.keys(state.hoge).length === 0);
+});
+
+test("can set action for errors", async t => {
+  // const rootReducer = watchRootReducer(_validateReducer, {
+  //   errorStateId: "hoge",
+  //   returnType: "array"
+  // });
+  const a = () => createStaticValidator;
+  a();
+  const action = setValidatorResults({ foo: { id: "bar", message: "error" } });
+  console.log(action);
+  t.deepEqual(action, {
+    payload: { foo: { id: "bar", message: "error" } },
+    type: "@@REDUX_STATE_VALIDATION/SET_VALIDATIONS"
+  });
+  // const store = createStore(rootReducer, { postalCode: 0 });
+
+  // store.dispatch({ type: "SET_STRING" });
+  // let state = store.getState();
+  // t.truthy((state.hoge as { [id: string]: Error[] }).postalCode.length === 1);
+  // t.deepEqual(state.hoge, {
+  //   postalCode: [
+  //     {
+  //       id: "postalCode",
+  //       message: "Invalid PostalCode"
+  //     }
+  //   ]
+  // });
+  // store.dispatch({ type: "SET_NUMBER" });
+  // state = store.getState();
+  // t.truthy(Object.keys(state.hoge).length === 0);
 });
