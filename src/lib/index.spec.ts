@@ -112,7 +112,7 @@ test("whether combineReducers can validate for object", async t => {
   t.truthy(Object.keys(state.errors).length === 0);
 });
 
-test("createStaticValidator works", async t => {
+test("createStaticValidator correct works with Error", async t => {
   const rootReducer = watchRootReducer(_validateReducer);
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_STRING" });
@@ -126,10 +126,32 @@ test("createStaticValidator works", async t => {
       validate: _state => isNumber(_state.postalCode)
     }
   ];
-  const validate = createStaticValidator({ postalCode: validatorsLocal });
-  store.dispatch(validate({ postalCode: "hoge" }));
+  const validate = createStaticValidator({ state: validatorsLocal });
+  store.dispatch(validate({state:{ postalCode: "hoge" }}));
   const result = store.getState().errors;
   t.deepEqual(result, errors);
+});
+
+test("createStaticValidator correct works with no Error", async t => {
+  const rootReducer = watchRootReducer(_validateReducer);
+  const store = createStore(rootReducer, { postalCode: 0 });
+  store.dispatch({ type: "SET_NUMBER" });
+  const errors = store.getState().errors;
+  const validatorsLocal = [
+    {
+      error: {
+        id: "postalCode",
+        message: "Invalid PostalCode"
+      },
+      validate: _state => isNumber(_state.postalCode)
+    }
+  ];
+  const validate = createStaticValidator({ state: validatorsLocal });
+  store.dispatch(validate({state:{ postalCode: 123 }}));
+  const result = store.getState().errors;
+  console.log(result)
+  t.deepEqual(result, errors);
+  t.deepEqual(result, {});
 });
 
 test("create validation single reducer object", async t => {
