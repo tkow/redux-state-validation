@@ -350,14 +350,16 @@ const rootReducer = watchRootReducer(
 ```
 So, you can set arbitral ids for getting errors through action input value.
 
-# warning option with validator
+# strict option with validator
 
-Warning option can enable us to update state even if your validate rules are violated unless there are no violated validators without warning option.
+(warning is obsoleted, and default is same behavior of it, because we use more frequently warning than strict validation)
+
+Strict option can enable us to update state even if your validate rules are violated unless there are no violated validators without strict option.
 
 See the test example.
 
 ```typescript
-test("if useing warning option of validator, result are set by payload ", async t => {
+test("if useing strict option of validator, result are set by payload ", async t => {
   const rootReducer = watchRootReducer(
     combineReducers({
       postalCode: withValidateReducer(initialStateUndefinedReducer, [
@@ -367,7 +369,7 @@ test("if useing warning option of validator, result are set by payload ", async 
             message: "Invalid PostalCode"
           },
           validate: (_, action: any) => Number(action.value) < 100,
-          warning: true
+          strict: true
         }
       ])
     })

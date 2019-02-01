@@ -127,7 +127,7 @@ export class ValidationWatcherFactory {
             validator
           });
         }
-        return invalid && !validator.warning;
+        return invalid && validator.strict;
       })
       .some(result => result);
   };

@@ -119,7 +119,7 @@ test("create validation single reducer object", async t => {
       message: "Invalid PostalCode"
     }
   });
-  t.deepEqual(state.postalCode, 0);
+  t.deepEqual(state.postalCode, "123r");
   store.dispatch({ type: "SET_NUMBER" });
   state = store.getState();
   t.truthy(Object.keys(state.errors).length === 0);
@@ -185,7 +185,7 @@ test("create validation single reducer for array", async t => {
       }
     ]
   });
-  t.deepEqual(state.postalCode, 0);
+  t.deepEqual(state.postalCode, "123r");
   store.dispatch({ type: "SET_NUMBER" });
   state = store.getState();
   t.truthy(Object.keys(state.errors as { [id: string]: Error[] }).length === 0);
@@ -262,7 +262,7 @@ test("action validations run before reducers execution and return state soon if 
     value: 0
   });
   state = store.getState();
-  t.truthy(Object.keys(state.errors).length === 1);
+  t.truthy(Object.keys(state.errors).length === 2);
   t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode1");
 });
 
@@ -304,7 +304,7 @@ test("use afterReduce if need get all errors set validation", async t => {
   t.truthy(Object.keys(state.errors).length === 2);
 });
 
-test("if useing warning option of validator, result are set by payload ", async t => {
+test("if useing strict option of validator, result are set by payload ", async t => {
   const rootReducer = watchRootReducer(
     combineReducers({
       postalCode: withValidateReducer(initialStateUndefinedReducer, [
@@ -313,8 +313,8 @@ test("if useing warning option of validator, result are set by payload ", async 
             id: "postalCode1",
             message: "Invalid PostalCode"
           },
-          validate: (_, action: any) => Number(action.value) < 100,
-          warning: true
+          strict: true,
+          validate: (_, action: any) => Number(action.value) < 100
         }
       ])
     })
@@ -327,7 +327,7 @@ test("if useing warning option of validator, result are set by payload ", async 
   const state = store.getState();
   t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode1");
   t.truthy(Object.keys(state.errors).length === 1);
-  t.deepEqual(state.postalCode, 123);
+  t.deepEqual(state.postalCode, 0);
 });
 
 test("use idSelector restructure errors id", async t => {

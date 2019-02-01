@@ -6,7 +6,7 @@ export interface Error {
 export interface Validator<T, Action = any> {
   error: Error;
   afterReduce?: boolean;
-  warning?: boolean;
+  strict?: boolean;
   idSelecter?(id: string, action: Action): string;
   validate(state: T, action?: Action): boolean;
 }
