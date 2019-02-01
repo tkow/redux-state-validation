@@ -350,7 +350,7 @@ So, you can set arbitral ids for getting errors through action input value.
 
 (warning is obsoleted, and default is same behavior of it, because we use more frequently warning than strict validation)
 
-Strict option can enable us to update state even if your validate rules are violated unless there are no violated validators without strict option.
+Strict option can disable us to update state if your validate rules are violated.
 
 See the test example.
 
@@ -378,7 +378,7 @@ test("if useing strict option of validator, result are set by payload ", async t
   const state = store.getState();
   t.truthy(state.errors[Object.keys(state.errors)[0]].id === "postalCode1");
   t.truthy(Object.keys(state.errors).length === 1);
-  t.deepEqual(state.postalCode, 123);
+  t.deepEqual(state.postalCode, undefined);
 });
 ```
 
