@@ -1,7 +1,13 @@
 import { AbstractValidationWatcher } from "./AbstractValidationWather";
 import { ArrayValidationWatcher } from "./ArrayValidationWatcher";
 import { ObjectValidationWatcher } from "./ObjectValidationWatcher";
-import { ArrayResultValue, ObjectResultValue, Validator } from "./types";
+import {
+  ArrayResultValue,
+  Error,
+  ObjectResultValue,
+  ReduxAction,
+  Validator
+} from "./types";
 
 type ReturnType = "object" | "array";
 
@@ -10,7 +16,7 @@ export interface Config<T extends string, R extends ReturnType> {
   returnType?: R;
 }
 
-export interface Reducer<State extends {}, Action> {
+export interface Reducer<State extends {}, Action extends ReduxAction> {
   (state: State, action: Action): State;
 }
 
@@ -42,9 +48,12 @@ function isObjectValidatorWatcher(
 }
 
 export class ValidationWatcherFactory {
+  protected actionTypes = {
+    SET_VALIDATIONS: "@@REDUX_STATE_VALIDATION/SET_VALIDATIONS"
+  };
   private _validationWatcher: AbstractValidationWatcher<"object" | "array">;
   private _initialized: boolean = false;
-  public withValidateReducer = <T, Action>(
+  public withValidateReducer = <T, Action extends ReduxAction>(
     reducer: (state: T, action: Action) => T,
     validators: Array<Validator<T, Action>>
   ): typeof reducer => {
@@ -78,9 +87,55 @@ export class ValidationWatcherFactory {
     };
   };
 
+  public createStaticValidator<T, Action extends ReduxAction>(
+    validators: { [stateName in keyof T]: Array<Validator<T, Action>> }
+  ) {
+    return (value: T) => {
+      const stateValidationResults = Object.keys(validators).reduce(
+        (current, key, _index) => {
+          const result = validators[key].reduce((_result, _validator) => {
+            const invalid =
+              !_validator.validate(value[key], {}) && value[key] !== undefined;
+            if (invalid) {
+              return this._validationWatcher.getErrorResults(
+                current,
+                _validator.error,
+                {
+                  validator: _validator
+                }
+              );
+            }
+            return _result;
+          }, {});
+          if (Object.keys(result).length > 0) {
+            return {
+              ...current,
+              [key]: result
+            };
+          }
+          return current;
+        },
+        {}
+      );
+      return this.setValidatorResults(stateValidationResults)
+    };
+  }
+
+  public setValidatorResults(
+    errors:
+      | Error[]
+      | { [key: string]: { [key: string]: Error } }
+      | { [id: string]: string }
+  ) {
+    return {
+      payload: errors,
+      type: this.actionTypes.SET_VALIDATIONS
+    };
+  }
+
   public watchRootReducer = <
     State extends {},
-    Action,
+    Action extends ReduxAction,
     Key extends string = "errors",
     TReturnType extends ReturnType = "object"
   >(
@@ -98,16 +153,23 @@ export class ValidationWatcherFactory {
         delete state[errorStateId];
       }
       const nextState = reducer(state, action);
-      const _nextErrors = this._validationWatcher.nextErrors();
+      const _nextErrors = (_state, action) => {
+        switch (action.type) {
+          case this.actionTypes.SET_VALIDATIONS:
+            return action.payload;
+          default:
+            return this._validationWatcher.nextErrors();
+        }
+      };
       return {
         ...(nextState as object),
-        [errorStateId]: _nextErrors
+        [errorStateId]: _nextErrors(state, action)
       } as State & WithValidatorState<State, Key, TReturnType>;
     };
   };
 
-  protected isInvalid = <T, A>(
-    validators: Array<Validator<T, A>>,
+  protected isInvalid = <T, Action extends ReduxAction>(
+    validators: Array<Validator<T, Action>>,
     {
       prev,
       next = prev,
@@ -115,7 +177,7 @@ export class ValidationWatcherFactory {
     }: {
       prev: T;
       next?: T;
-      action: A;
+      action: Action;
     }
   ) => {
     return validators

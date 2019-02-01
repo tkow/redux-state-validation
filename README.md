@@ -305,7 +305,7 @@ const rootReducer = watchRootReducer(
             id: "postalCode1",
             message: "Invalid PostalCode"
           },
-          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+          idSelector: (errorId, action: { meta?: { id: string } }) =>
             (action.meta && action.meta.id) || errorId,
           validate: (_, action: any) => Number(action.value) > 100
         },
@@ -314,7 +314,7 @@ const rootReducer = watchRootReducer(
             id: "postalCode2",
             message: "Invalid PostalCode"
           },
-          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+          idSelector: (errorId, action: { meta?: { id: string } }) =>
             (action.meta && action.meta.id) || errorId,
           validate: _ => false
         }

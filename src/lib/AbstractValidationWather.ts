@@ -1,4 +1,10 @@
-import { Error, ResultValue, Validator } from "./types";
+import {
+  ArrayResultValue,
+  Error,
+  ObjectResultValue,
+  ResultValue,
+  Validator
+} from "./types";
 
 export type ReturnType = "object" | "array";
 
@@ -8,14 +14,14 @@ export interface InternalParams<T extends ResultValue> {
 
 export interface WithErrorOptions<T, Action> {
   validator: Validator<T, Action>;
-  action: Action;
+  action?: Action;
 }
 
 export abstract class AbstractValidationWatcher<
   TReturnType extends ReturnType,
   Type extends ResultValue = TReturnType extends "array"
-    ? Error[] | { [id: string]: Error[] }
-    : { [id: string]: Error | { [id: string]: Error } }
+    ? ArrayResultValue
+    : ObjectResultValue
 > {
   public abstract withError: <T, Action>(
     error: Error,
@@ -23,4 +29,9 @@ export abstract class AbstractValidationWatcher<
   ) => void;
   public abstract nextErrors: () => ResultValue;
   protected abstract internal: InternalParams<Type>;
+  public abstract getErrorResults<T, Action>(
+    results: ResultValue,
+    error: Error,
+    { validator, action }: WithErrorOptions<T, Action>
+  ): ResultValue;
 }

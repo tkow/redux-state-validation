@@ -340,7 +340,7 @@ test("use idSelector restructure errors id", async t => {
             id: "postalCode1",
             message: "Invalid PostalCode"
           },
-          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+          idSelector: (errorId, action: { meta?: { id: string } }) =>
             (action.meta && action.meta.id) || errorId,
           validate: (_, action: any) => Number(action.value) > 100
         },
@@ -349,7 +349,7 @@ test("use idSelector restructure errors id", async t => {
             id: "postalCode2",
             message: "Invalid PostalCode"
           },
-          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+          idSelector: (errorId, action: { meta?: { id: string } }) =>
             (action.meta && action.meta.id) || errorId,
           validate: _ => false
         }
@@ -359,22 +359,22 @@ test("use idSelector restructure errors id", async t => {
   const store = createStore(rootReducer);
   store.dispatch({
     meta: {
-      id: "addIdSelector"
+      id: "addidSelector"
     },
     type: "SET_NUMBER",
     value: 0
   });
   const state = store.getState();
   t.truthy(
-    (state.errors.addIdSelector as any).postalCode1.id === "postalCode1"
+    (state.errors.addidSelector as any).postalCode1.id === "postalCode1"
   );
   t.truthy(
-    (state.errors.addIdSelector as any).postalCode2.id === "postalCode2"
+    (state.errors.addidSelector as any).postalCode2.id === "postalCode2"
   );
   t.truthy(Object.keys(state.errors).length === 1);
-  t.truthy(Object.keys(state.errors.addIdSelector).length === 2);
+  t.truthy(Object.keys(state.errors.addidSelector).length === 2);
   t.deepEqual(state.errors, {
-    addIdSelector: {
+    addidSelector: {
       postalCode1: {
         id: "postalCode1",
         message: "Invalid PostalCode"
@@ -397,7 +397,7 @@ test("use idSelector restructure errors id for array", async t => {
             id: "postalCode1",
             message: "Invalid PostalCode"
           },
-          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+          idSelector: (errorId, action: { meta?: { id: string } }) =>
             (action.meta && action.meta.id) || errorId,
           validate: (_, action: any) => Number(action.value) > 100
         },
@@ -406,7 +406,7 @@ test("use idSelector restructure errors id for array", async t => {
             id: "postalCode2",
             message: "Invalid PostalCode"
           },
-          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+          idSelector: (errorId, action: { meta?: { id: string } }) =>
             (action.meta && action.meta.id) || errorId,
           validate: _ => false
         }
@@ -419,18 +419,18 @@ test("use idSelector restructure errors id for array", async t => {
   const store = createStore(rootReducer);
   store.dispatch({
     meta: {
-      id: "addIdSelector"
+      id: "addidSelector"
     },
     type: "SET_NUMBER",
     value: 0
   });
   const state = store.getState();
-  t.truthy((state.errors as any).addIdSelector[0].id === "postalCode1");
-  t.truthy((state.errors as any).addIdSelector[1].id === "postalCode2");
+  t.truthy((state.errors as any).addidSelector[0].id === "postalCode1");
+  t.truthy((state.errors as any).addidSelector[1].id === "postalCode2");
   t.truthy(Object.keys(state.errors).length === 1);
-  t.truthy((state.errors as any).addIdSelector.length === 2);
+  t.truthy((state.errors as any).addidSelector.length === 2);
   t.deepEqual(state.errors as any, {
-    addIdSelector: [
+    addidSelector: [
       {
         id: "postalCode1",
         message: "Invalid PostalCode"
