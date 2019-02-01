@@ -34,4 +34,11 @@ export abstract class AbstractValidationWatcher<
     error: Error,
     { validator, action }: WithErrorOptions<T, Action>
   ): ResultValue;
+  public mapIdToObject = <Key extends string,Value extends ResultValue>(ids: Key[],value:Value) : Value => {
+    return ids.reverse().reduce((obj:object,nextId:string) => {
+      return {
+        [nextId]: obj
+      }
+    },value) as Value
+  }
 }

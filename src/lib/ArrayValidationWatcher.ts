@@ -2,7 +2,7 @@ import {
   AbstractValidationWatcher,
   InternalParams,
   WithErrorOptions
-} from "./AbstractValidationWather";
+} from "./AbstractValidationWatcher";
 import { ArrayResultValue, Error } from "./types";
 
 export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {

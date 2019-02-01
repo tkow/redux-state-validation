@@ -2,15 +2,13 @@ import {
   AbstractValidationWatcher,
   InternalParams,
   WithErrorOptions
-} from "./AbstractValidationWather";
+} from "./AbstractValidationWatcher";
 import { Error, ObjectResultValue } from "./types";
 
 export class ObjectValidationWatcher extends AbstractValidationWatcher<
   "object"
 > {
-  protected internal: InternalParams<{
-    [id: string]: Error | { [id: string]: Error };
-  }>;
+  protected internal: InternalParams<ObjectResultValue>;
 
   constructor(internal = {}) {
     super();
@@ -42,24 +40,20 @@ export class ObjectValidationWatcher extends AbstractValidationWatcher<
     error: Error,
     { validator, action }: WithErrorOptions<T, Action>
   ): ObjectResultValue => {
-    let _result = { ...results };
+    const _result = { ...results };
     if (validator.idSelector) {
-      const key = validator.idSelector(error.id, action);
-      if (!_result[key]) {
-        _result[key] = {};
+      let keys = validator.idSelector(error.id, action);
+      if(typeof keys === 'string') {
+        keys = [keys]
       }
-      return {
-        ...(_result as { [id: string]: { [id: string]: Error } }),
-        [key]: {
-          ..._result[key],
-          [error.id]: error
-        }
-      };
+      return this.mapIdToObject(
+        keys,  {[error.id]: error}
+      );
     } else {
-      return (_result = {
+      return {
         ...(_result as ObjectResultValue),
         [error.id]: error
-      });
+      };
     }
   };
 }
