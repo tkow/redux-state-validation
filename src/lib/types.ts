@@ -11,7 +11,7 @@ export interface Validator<T, Action = ReduxAction> {
   error: Error;
   afterReduce?: boolean;
   strict?: boolean;
-  idSelector?(id: string, action: Action): string;
+  idSelector?(id?: string, action?: Action): string;
   validate(state: T, action?: Action): boolean;
 }
 
