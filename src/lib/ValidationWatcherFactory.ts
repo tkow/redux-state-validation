@@ -110,7 +110,7 @@ export class ValidationWatcherFactory {
           if (Object.keys(result).length > 0) {
             return {
               ...current,
-              [key]: result
+              ...result
             };
           }
           return current;

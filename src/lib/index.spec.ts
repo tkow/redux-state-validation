@@ -112,6 +112,26 @@ test("whether combineReducers can validate for object", async t => {
   t.truthy(Object.keys(state.errors).length === 0);
 });
 
+test("createStaticValidator works", async t => {
+  const rootReducer = watchRootReducer(_validateReducer);
+  const store = createStore(rootReducer, { postalCode: 0 });
+  store.dispatch({ type: "SET_STRING" });
+  const errors = store.getState().errors;
+  const validatorsLocal = [
+    {
+      error: {
+        id: "postalCode",
+        message: "Invalid PostalCode"
+      },
+      validate: _state => isNumber(_state.postalCode)
+    }
+  ];
+  const validate = createStaticValidator({ postalCode: validatorsLocal });
+  store.dispatch(validate({ postalCode: "hoge" }));
+  const result = store.getState().errors;
+  t.deepEqual(result, errors);
+});
+
 test("create validation single reducer object", async t => {
   const rootReducer = watchRootReducer(_validateReducer);
   const store = createStore(rootReducer, { postalCode: 0 });
@@ -507,32 +527,10 @@ test("can rename errorStateId for array", async t => {
 });
 
 test("can set action for errors", async t => {
-  // const rootReducer = watchRootReducer(_validateReducer, {
-  //   errorStateId: "hoge",
-  //   returnType: "array"
-  // });
-  const a = () => createStaticValidator;
-  a();
   const action = setValidatorResults({ foo: { id: "bar", message: "error" } });
   console.log(action);
   t.deepEqual(action, {
     payload: { foo: { id: "bar", message: "error" } },
     type: "@@REDUX_STATE_VALIDATION/SET_VALIDATIONS"
   });
-  // const store = createStore(rootReducer, { postalCode: 0 });
-
-  // store.dispatch({ type: "SET_STRING" });
-  // let state = store.getState();
-  // t.truthy((state.hoge as { [id: string]: Error[] }).postalCode.length === 1);
-  // t.deepEqual(state.hoge, {
-  //   postalCode: [
-  //     {
-  //       id: "postalCode",
-  //       message: "Invalid PostalCode"
-  //     }
-  //   ]
-  // });
-  // store.dispatch({ type: "SET_NUMBER" });
-  // state = store.getState();
-  // t.truthy(Object.keys(state.hoge).length === 0);
 });
