@@ -69,13 +69,11 @@
 					<a href="https://codecov.io/gh/tkow/redux-state-validation"><img src="https://codecov.io/gh/tkow/redux-state-validation/branch/master/graph/badge.svg" alt="codecov"></a>
 					<a href="https://github.com/tkow/redux-state-validation"><img src="https://img.shields.io/github/stars/tkow/redux-state-validation.svg?style=social&logo=github&label=Stars" alt="GitHub stars"></a>
 				<a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="code style: prettier"></a></p>
-				<h1 id="warning">WARNING</h1>
-				<p>I&#39;m planning to drastically change this project, with many breaking compatibilities. So, please lock version if you are using this.</p>
 				<h1 id="why-redux-state-validation-">Why redux-state-validation ?</h1>
 				<p>Add validator to reducer&#39;s result handy. Common validator have problem that depends on form or action thus, will be inclined to be weak by modification or increse redundant definitions.This library is simple to extend state array has arbitrary name (default:errors) with checking error and set the messages after each reducer&#39;s callback.</p>
 				<p>This library for react-native rather than react, but we aim to seemless reuse redux state loosely-coupled each applications with react-native and web.</p>
 				<h1 id="demo">Demo</h1>
-				<p><a href="https://codesandbox.io/embed/82498npzv9">codesandbox</a></p>
+				<p><a href="https://codesandbox.io/embed/k353p8rlr">codesandbox</a></p>
 				<p align="center">
 					<img src="https://raw.github.com/wiki/tkow/redux-state-validation/images/demo/rsv-example.gif" />
 				</p>
@@ -322,7 +320,7 @@ t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.error
             id: <span class="hljs-string">"postalCode1"</span>,
             message: <span class="hljs-string">"Invalid PostalCode"</span>
           },
-          idSelecter: <span class="hljs-function">(<span class="hljs-params">errorId, action: { meta?: { id: <span class="hljs-built_in">string</span> } }</span>) =&gt;</span>
+          idSelector: <span class="hljs-function">(<span class="hljs-params">errorId, action: { meta?: { id: <span class="hljs-built_in">string</span> } }</span>) =&gt;</span>
             (action.meta &amp;&amp; action.meta.id) || errorId,
           validate: <span class="hljs-function">(<span class="hljs-params">_, action: <span class="hljs-built_in">any</span></span>) =&gt;</span> <span class="hljs-built_in">Number</span>(action.value) &gt; <span class="hljs-number">100</span>
         },
@@ -331,7 +329,7 @@ t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.error
             id: <span class="hljs-string">"postalCode2"</span>,
             message: <span class="hljs-string">"Invalid PostalCode"</span>
           },
-          idSelecter: <span class="hljs-function">(<span class="hljs-params">errorId, action: { meta?: { id: <span class="hljs-built_in">string</span> } }</span>) =&gt;</span>
+          idSelector: <span class="hljs-function">(<span class="hljs-params">errorId, action: { meta?: { id: <span class="hljs-built_in">string</span> } }</span>) =&gt;</span>
             (action.meta &amp;&amp; action.meta.id) || errorId,
           validate: _ =&gt; <span class="hljs-literal">false</span>
         }
@@ -394,7 +392,47 @@ t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.error
   t.truthy(<span class="hljs-built_in">Object</span>.keys(state.errors).length === <span class="hljs-number">1</span>);
   t.deepEqual(state.postalCode, <span class="hljs-number">123</span>);
 });</code></pre>
-				<p>this options for the case if input mounting your redux state and you want allow users to input keys until submitting.</p>
+				<p>this options for the case if input mounting your redux state and you want to disallow users to input keys until submitting.</p>
+				<h1 id="manual-and-force-writing-validation-results">manual and force writing validation results</h1>
+				<p>You can force writing Errors set filtered validators like</p>
+				<pre><code class="language-typescript">  <span class="hljs-keyword">const</span> rootReducer = watchRootReducer(_validateReducer);
+  <span class="hljs-keyword">const</span> store = createStore(rootReducer, { postalCode: <span class="hljs-number">0</span> });
+  <span class="hljs-keyword">const</span> validatorsLocal = [
+    {
+      error: {
+        id: <span class="hljs-string">"postalCode"</span>,
+        message: <span class="hljs-string">"Invalid PostalCode"</span>
+      },
+      validate: _state =&gt; isNumber(_state.postalCode)
+    }
+  ];
+  <span class="hljs-keyword">const</span> validate = createStaticValidator({ state: validatorsLocal });
+  <span class="hljs-keyword">const</span> target = {state:{ postalCode: <span class="hljs-string">"hoge"</span> }}
+  store.dispatch(validate(target));
+  <span class="hljs-keyword">const</span> errors = store.getState().errors;
+  <span class="hljs-built_in">console</span>.log(result, errors);
+<span class="hljs-comment">/* output:
+{
+  postalCode: {
+    id: "postalCode",
+    message: "Invalid PostalCode"
+  },
+}
+*/</span></code></pre>
+				<p>when you want to trigger getErrors whenever or force surpressing errors already exists unavoidably, use that.</p>
+				<p>And you can force to set arbital error messages as long as this library&#39;s format.</p>
+				<pre><code class="language-typescript">test(<span class="hljs-string">"can set action for errors"</span>, <span class="hljs-keyword">async</span> t =&gt; {
+  <span class="hljs-keyword">const</span> action = setValidatorResults({ foo: { id: <span class="hljs-string">"bar"</span>, message: <span class="hljs-string">"error"</span> } });
+});
+<span class="hljs-comment">/* output:
+{
+  foo: {
+    id: "foo",
+    message: "error"
+  },
+}
+*/</span></code></pre>
+				<p>This is not recommended except for when you are inevitable.</p>
 				<p>See more detail <a href="https://tkow.github.io/redux-state-validation/">here</a>.</p>
 				<h1 id="discussion">Discussion</h1>
 				<p>Though I recommend that watchRootReducer should set rootRedducer state, you can create error state at deeper located in nested state.Most case are enough at root only because dispatch methods are always synchronous unless odd acync actions breakes dispatch mutation rules (ordinaly you don&#39;t care mutch. the case does&#39;t happen if you use normally redux, async callbacks waits until process done if it is being executed ).</p>
@@ -467,6 +505,9 @@ t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.error
 					<li class=" tsd-kind-class">
 						<a href="classes/validationwatcherfactory.html" class="tsd-kind-icon">Validation<wbr>Watcher<wbr>Factory</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/arrayresultvalue.html" class="tsd-kind-icon">Array<wbr>Result<wbr>Value</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/config.html" class="tsd-kind-icon">Config</a>
 					</li>
@@ -482,14 +523,14 @@ t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.error
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/reducer.html" class="tsd-kind-icon">Reducer</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/reduxaction.html" class="tsd-kind-icon">Redux<wbr>Action</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/validator.html" class="tsd-kind-icon">Validator</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/witherroroptions.html" class="tsd-kind-icon">With<wbr>Error<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#arrayresultvalue" class="tsd-kind-icon">Array<wbr>Result<wbr>Value</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#resultvalue" class="tsd-kind-icon">Result<wbr>Value</a>
@@ -499,6 +540,12 @@ t.truthy(state.errors[<span class="hljs-built_in">Object</span>.keys(state.error
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
 						<a href="globals.html#withvalidatorstate" class="tsd-kind-icon">With<wbr>Validator<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#createstaticvalidator" class="tsd-kind-icon">create<wbr>Static<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#setvalidatorresults" class="tsd-kind-icon">set<wbr>Validator<wbr>Results</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#watchrootreducer" class="tsd-kind-icon">watch<wbr>Root<wbr>Reducer</a>

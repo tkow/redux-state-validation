@@ -106,6 +106,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite"><a href="objectvalidationwatcher.html#geterrorresults" class="tsd-kind-icon">get<wbr>Error<wbr>Results</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="objectvalidationwatcher.html#nexterrors" class="tsd-kind-icon">next<wbr>Errors</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite"><a href="objectvalidationwatcher.html#witherror" class="tsd-kind-icon">with<wbr>Error</a></li>
 							</ul>
@@ -125,7 +126,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/185a77d/src/lib/ObjectValidationWatcher.ts#L13">lib/ObjectValidationWatcher.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/21ec81c/src/lib/ObjectValidationWatcher.ts#L13">lib/ObjectValidationWatcher.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -150,13 +151,60 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="abstractvalidationwatcher.html">AbstractValidationWatcher</a>.<a href="abstractvalidationwatcher.html#internal">internal</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/185a77d/src/lib/ObjectValidationWatcher.ts#L11">lib/ObjectValidationWatcher.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/21ec81c/src/lib/ObjectValidationWatcher.ts#L11">lib/ObjectValidationWatcher.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
+					<a name="geterrorresults" class="tsd-anchor"></a>
+					<h3>get<wbr>Error<wbr>Results</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Error<wbr>Results&lt;T, Action&gt;<span class="tsd-signature-symbol">(</span>results<span class="tsd-signature-symbol">: </span><a href="../interfaces/objectresultvalue.html" class="tsd-signature-type">ObjectResultValue</a>, error<span class="tsd-signature-symbol">: </span><a href="../interfaces/error.html" class="tsd-signature-type">Error</a>, __namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/objectresultvalue.html" class="tsd-signature-type">ObjectResultValue</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="abstractvalidationwatcher.html">AbstractValidationWatcher</a>.<a href="abstractvalidationwatcher.html#geterrorresults">getErrorResults</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/21ec81c/src/lib/ObjectValidationWatcher.ts#L40">lib/ObjectValidationWatcher.ts:40</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T</h4>
+								</li>
+								<li>
+									<h4>Action</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>results: <a href="../interfaces/objectresultvalue.html" class="tsd-signature-type">ObjectResultValue</a></h5>
+								</li>
+								<li>
+									<h5>error: <a href="../interfaces/error.html" class="tsd-signature-type">Error</a></h5>
+								</li>
+								<li>
+									<h5>__namedParameters: <span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>action<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Action</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>validator<span class="tsd-signature-symbol">: </span><a href="../interfaces/validator.html" class="tsd-signature-type">Validator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/objectresultvalue.html" class="tsd-signature-type">ObjectResultValue</a></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 					<a name="nexterrors" class="tsd-anchor"></a>
 					<h3>next<wbr>Errors</h3>
@@ -168,7 +216,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="abstractvalidationwatcher.html">AbstractValidationWatcher</a>.<a href="abstractvalidationwatcher.html#nexterrors">nextErrors</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/185a77d/src/lib/ObjectValidationWatcher.ts#L47">lib/ObjectValidationWatcher.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/21ec81c/src/lib/ObjectValidationWatcher.ts#L34">lib/ObjectValidationWatcher.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/objectresultvalue.html" class="tsd-signature-type">ObjectResultValue</a></h4>
@@ -179,14 +227,14 @@
 					<a name="witherror" class="tsd-anchor"></a>
 					<h3>with<wbr>Error</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">with<wbr>Error&lt;T, Action&gt;<span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><a href="../interfaces/error.html" class="tsd-signature-type">Error</a>, __namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Error&lt;T, Action&gt;<span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><a href="../interfaces/error.html" class="tsd-signature-type">Error</a>, withErrorOptions<span class="tsd-signature-symbol">: </span><a href="../interfaces/witherroroptions.html" class="tsd-signature-type">WithErrorOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="abstractvalidationwatcher.html">AbstractValidationWatcher</a>.<a href="abstractvalidationwatcher.html#witherror">withError</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/185a77d/src/lib/ObjectValidationWatcher.ts#L23">lib/ObjectValidationWatcher.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/tkow/redux-state-validation/blob/21ec81c/src/lib/ObjectValidationWatcher.ts#L23">lib/ObjectValidationWatcher.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -204,15 +252,7 @@
 									<h5>error: <a href="../interfaces/error.html" class="tsd-signature-type">Error</a></h5>
 								</li>
 								<li>
-									<h5>__namedParameters: <span class="tsd-signature-type">object</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5>action<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Action</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5>validator<span class="tsd-signature-symbol">: </span><a href="../interfaces/validator.html" class="tsd-signature-type">Validator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></h5>
-										</li>
-									</ul>
+									<h5>withErrorOptions: <a href="../interfaces/witherroroptions.html" class="tsd-signature-type">WithErrorOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Action</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -248,6 +288,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
 								<a href="objectvalidationwatcher.html#internal" class="tsd-kind-icon">internal</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-overwrite">
+								<a href="objectvalidationwatcher.html#geterrorresults" class="tsd-kind-icon">get<wbr>Error<wbr>Results</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="objectvalidationwatcher.html#nexterrors" class="tsd-kind-icon">next<wbr>Errors</a>
 							</li>
@@ -260,6 +303,9 @@
 				<ul class="after-current">
 					<li class=" tsd-kind-class">
 						<a href="validationwatcherfactory.html" class="tsd-kind-icon">Validation<wbr>Watcher<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/arrayresultvalue.html" class="tsd-kind-icon">Array<wbr>Result<wbr>Value</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="../interfaces/config.html" class="tsd-kind-icon">Config</a>
@@ -276,14 +322,14 @@
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="../interfaces/reducer.html" class="tsd-kind-icon">Reducer</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/reduxaction.html" class="tsd-kind-icon">Redux<wbr>Action</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="../interfaces/validator.html" class="tsd-kind-icon">Validator</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="../interfaces/witherroroptions.html" class="tsd-kind-icon">With<wbr>Error<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#arrayresultvalue" class="tsd-kind-icon">Array<wbr>Result<wbr>Value</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#resultvalue" class="tsd-kind-icon">Result<wbr>Value</a>
@@ -293,6 +339,12 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
 						<a href="../globals.html#withvalidatorstate" class="tsd-kind-icon">With<wbr>Validator<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#createstaticvalidator" class="tsd-kind-icon">create<wbr>Static<wbr>Validator</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="../globals.html#setvalidatorresults" class="tsd-kind-icon">set<wbr>Validator<wbr>Results</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="../globals.html#watchrootreducer" class="tsd-kind-icon">watch<wbr>Root<wbr>Reducer</a>
