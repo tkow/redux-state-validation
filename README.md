@@ -6,7 +6,7 @@
 
 # WARNING
 
-I'm planning to drastically change this project, many breaking changes. So, please lock version if you are using this.
+I'm planning to drastically change this project, with many breaking compatibilities. So, please lock version if you are using this.
 
 # Why redux-state-validation ?
 
