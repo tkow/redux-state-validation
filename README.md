@@ -16,7 +16,7 @@ This library for react-native rather than react, but we aim to seemless reuse re
 
 # Demo
 
-[codesandbox](https://codesandbox.io/embed/82498npzv9)
+[codesandbox](https://codesandbox.io/embed/k353p8rlr)
 
 <p align="center">
   <img src="https://raw.github.com/wiki/tkow/redux-state-validation/images/demo/rsv-example.gif" />
