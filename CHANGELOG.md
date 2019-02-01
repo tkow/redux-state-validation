@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="4.0.0"></a>
+# [4.0.0](https://github.com/tkow/redux-state-validation/compare/v3.1.0...v4.0.0) (2019-02-01)
+
+
+### Features
+
+* **ValidationWatcher:** warning option changed to strict ([62f827b](https://github.com/tkow/redux-state-validation/commit/62f827b))
+
+
+### BREAKING CHANGES
+
+* **ValidationWatcher:** warning is obsoleted
+
+
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/tkow/redux-state-validation/compare/v3.0.1...v3.1.0) (2018-11-20)
 
