@@ -4,10 +4,6 @@
 [![GitHub stars](https://img.shields.io/github/stars/tkow/redux-state-validation.svg?style=social&logo=github&label=Stars)](https://github.com/tkow/redux-state-validation)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-# WARNING
-
-I'm planning to drastically change this project, with many breaking compatibilities. So, please lock version if you are using this.
-
 # Why redux-state-validation ?
 
 Add validator to reducer's result handy. Common validator have problem that depends on form or action thus, will be inclined to be weak by modification or increse redundant definitions.This library is simple to extend state array has arbitrary name (default:errors) with checking error and set the messages after each reducer's callback.
@@ -305,7 +301,7 @@ const rootReducer = watchRootReducer(
             id: "postalCode1",
             message: "Invalid PostalCode"
           },
-          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+          idSelector: (errorId, action: { meta?: { id: string } }) =>
             (action.meta && action.meta.id) || errorId,
           validate: (_, action: any) => Number(action.value) > 100
         },
@@ -314,7 +310,7 @@ const rootReducer = watchRootReducer(
             id: "postalCode2",
             message: "Invalid PostalCode"
           },
-          idSelecter: (errorId, action: { meta?: { id: string } }) =>
+          idSelector: (errorId, action: { meta?: { id: string } }) =>
             (action.meta && action.meta.id) || errorId,
           validate: _ => false
         }
@@ -386,7 +382,58 @@ test("if useing strict option of validator, result are set by payload ", async t
 });
 ```
 
-this options for the case if input mounting your redux state and you want allow users to input keys until submitting.
+this options for the case if input mounting your redux state and you want to disallow users to input keys until submitting.
+
+# manual and force writing validation results
+
+You can force writing Errors set filtered validators like
+
+```typescript
+  const rootReducer = watchRootReducer(_validateReducer);
+  const store = createStore(rootReducer, { postalCode: 0 });
+  const validatorsLocal = [
+    {
+      error: {
+        id: "postalCode",
+        message: "Invalid PostalCode"
+      },
+      validate: _state => isNumber(_state.postalCode)
+    }
+  ];
+  const validate = createStaticValidator({ state: validatorsLocal });
+  const target = {state:{ postalCode: "hoge" }}
+  store.dispatch(validate(target));
+  const errors = store.getState().errors;
+  console.log(result, errors);
+/* output:
+{
+  postalCode: {
+    id: "postalCode",
+    message: "Invalid PostalCode"
+  },
+}
+*/
+```
+
+when you want to trigger getErrors whenever or force surpressing errors already exists unavoidably, use that.
+
+And you can force to set arbital error messages as long as this library's format.
+
+```typescript
+test("can set action for errors", async t => {
+  const action = setValidatorResults({ foo: { id: "bar", message: "error" } });
+});
+/* output:
+{
+  foo: {
+    id: "foo",
+    message: "error"
+  },
+}
+*/
+```
+
+This is not recommended except for when you are inevitable.
 
 See more detail [here](https://tkow.github.io/redux-state-validation/).
 

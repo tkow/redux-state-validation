@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="4.2.0"></a>
+# [4.2.0](https://github.com/tkow/redux-state-validation/compare/v4.0.0...v4.2.0) (2019-02-01)
+
+
+### Bug Fixes
+
+* fix new api test ([ae0091c](https://github.com/tkow/redux-state-validation/commit/ae0091c))
+* meake key located correct ([9ed3d2a](https://github.com/tkow/redux-state-validation/commit/9ed3d2a))
+* type fix ([0199d3a](https://github.com/tkow/redux-state-validation/commit/0199d3a))
+
+
+### Features
+
+* **add createStaticValidator:** enable us to validate manualy ([57e3463](https://github.com/tkow/redux-state-validation/commit/57e3463))
+
+
+
 <a name="4.0.0"></a>
 # [4.0.0](https://github.com/tkow/redux-state-validation/compare/v3.1.0...v4.0.0) (2019-02-01)
 

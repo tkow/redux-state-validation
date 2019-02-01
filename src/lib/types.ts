@@ -3,15 +3,21 @@ export interface Error {
   message: string;
 }
 
-export interface Validator<T, Action = any> {
+export interface ReduxAction {
+  type: string;
+}
+
+export interface Validator<T, Action = ReduxAction> {
   error: Error;
   afterReduce?: boolean;
   strict?: boolean;
-  idSelecter?(id: string, action: Action): string;
+  idSelector?(id: string, action: Action): string;
   validate(state: T, action?: Action): boolean;
 }
 
-export type ArrayResultValue = Error[] | { [id: string]: Error[] };
+export interface ArrayResultValue {
+  [id: string]: Error[];
+}
 export interface ObjectResultValue {
   [id: string]: Error | { [id: string]: Error };
 }

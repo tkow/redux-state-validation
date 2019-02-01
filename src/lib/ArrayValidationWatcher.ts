@@ -18,23 +18,36 @@ export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {
 
   public withError = <T, Action>(
     error: Error,
-    { validator, action }: WithErrorOptions<T, Action>
+    withErrorOptions: WithErrorOptions<T, Action>
   ): void => {
-    const key = validator.idSelecter
-      ? validator.idSelecter(error.id, action)
-      : error.id;
-    if (!this.internal.results[key]) {
-      this.internal.results[key] = [];
-    }
-    this.internal.results = {
-      ...this.internal.results,
-      [key]: [...(this.internal.results[key] as Error[]), error]
-    };
+    this.internal.results = this.getErrorResults(
+      this.internal.results,
+      error,
+      withErrorOptions
+    );
   };
 
   public nextErrors = (): ArrayResultValue => {
     const _result = Object.assign({}, this.internal.results);
     this.internal.results = {};
     return _result;
+  };
+
+  public getErrorResults = <T, Action>(
+    results: ArrayResultValue,
+    error: Error,
+    { validator, action }: WithErrorOptions<T, Action>
+  ): ArrayResultValue => {
+    const _results = { ...results };
+    const key = validator.idSelector
+      ? validator.idSelector(error.id, action)
+      : error.id;
+    if (!_results[key]) {
+      _results[key] = [];
+    }
+    return {
+      ..._results,
+      [key]: [...(_results[key] as Error[]), error]
+    };
   };
 }

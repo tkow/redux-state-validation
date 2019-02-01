@@ -4,14 +4,12 @@ export { Validator, Error } from "./types";
 export { ValidationWatcherFactory };
 
 export function getInstance() {
-  const {
-    watchRootReducer,
-    withValidateReducer
-  } = new ValidationWatcherFactory();
-  return {
-    watchRootReducer,
-    withValidateReducer
-  };
+  return new ValidationWatcherFactory();
 }
 
-export const { withValidateReducer, watchRootReducer } = getInstance();
+export const {
+  withValidateReducer,
+  watchRootReducer,
+  createStaticValidator,
+  setValidatorResults
+} = getInstance();
