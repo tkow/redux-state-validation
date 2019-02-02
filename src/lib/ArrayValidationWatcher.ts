@@ -38,16 +38,17 @@ export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {
     error: Error,
     { validator, action }: WithErrorOptions<T, Action>
   ): ArrayResultValue => {
-    const _results = { ...results };
-    const key = validator.idSelector
+    const _result = { ...results };
+    let keys = validator.idSelector
       ? validator.idSelector(error.id, action)
       : error.id;
-    if (!_results[key]) {
-      _results[key] = [];
+    if (typeof keys === "string") {
+      keys = [keys];
     }
-    return {
-      ..._results,
-      [key]: [...(_results[key] as Error[]), error]
-    };
+    const prevStateArray = this.getCompositeObjectArray([...keys], _result);
+    const margedArray = prevStateArray[prevStateArray.length - 1].length
+      ? prevStateArray.pop()
+      : ([] as Error[]);
+    return this.mapIdToObject(keys, prevStateArray, [...margedArray, error]);
   };
 }

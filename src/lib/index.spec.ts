@@ -127,7 +127,7 @@ test("createStaticValidator correct works with Error", async t => {
     }
   ];
   const validate = createStaticValidator({ state: validatorsLocal });
-  store.dispatch(validate({state:{ postalCode: "hoge" }}));
+  store.dispatch(validate({ state: { postalCode: "hoge" } }));
   const result = store.getState().errors;
   t.deepEqual(result, errors);
 });
@@ -147,9 +147,9 @@ test("createStaticValidator correct works with no Error", async t => {
     }
   ];
   const validate = createStaticValidator({ state: validatorsLocal });
-  store.dispatch(validate({state:{ postalCode: 123 }}));
+  store.dispatch(validate({ state: { postalCode: 123 } }));
   const result = store.getState().errors;
-  console.log(result)
+  console.log(result);
   t.deepEqual(result, errors);
   t.deepEqual(result, {});
 });

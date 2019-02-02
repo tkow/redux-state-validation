@@ -41,19 +41,13 @@ export class ObjectValidationWatcher extends AbstractValidationWatcher<
     { validator, action }: WithErrorOptions<T, Action>
   ): ObjectResultValue => {
     const _result = { ...results };
-    if (validator.idSelector) {
-      let keys = validator.idSelector(error.id, action);
-      if(typeof keys === 'string') {
-        keys = [keys]
-      }
-      return this.mapIdToObject(
-        keys,  {[error.id]: error}
-      );
-    } else {
-      return {
-        ...(_result as ObjectResultValue),
-        [error.id]: error
-      };
+    let keys = validator.idSelector
+      ? validator.idSelector(error.id, action)
+      : error.id;
+    if (typeof keys === "string") {
+      keys = [keys];
     }
+    const prevStateArray = this.getCompositeObjectArray(keys, _result);
+    return this.mapIdToObject(keys, prevStateArray, error);
   };
 }
