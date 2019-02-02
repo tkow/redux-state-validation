@@ -289,7 +289,7 @@ But I recommended that reducers needs verified actions are all with action valid
 # idSelector (version >2.1.0)
 
 This feature is useful for if you have many relationships uis,
-of mapping redux state,
+of mapping redux state, return string or string[]
 
 ```typescript
 const rootReducer = watchRootReducer(
@@ -302,7 +302,7 @@ const rootReducer = watchRootReducer(
             message: "Invalid PostalCode"
           },
           idSelector: (errorId, action: { meta?: { id: string } }) =>
-            (action.meta && action.meta.id) || errorId,
+            ['component',action.meta.id,errorId],
           validate: (_, action: any) => Number(action.value) > 100
         },
         {
@@ -311,7 +311,7 @@ const rootReducer = watchRootReducer(
             message: "Invalid PostalCode"
           },
           idSelector: (errorId, action: { meta?: { id: string } }) =>
-            (action.meta && action.meta.id) || errorId,
+            ['component',action.meta.id,errorId],
           validate: _ => false
         }
       ])
@@ -331,15 +331,19 @@ const rootReducer = watchRootReducer(
 *  store.getState()
 *  the errors output:
 *  errors:{
-*    component1: {
-*      postalCode1: {
-*        id: "postalCode1",
-*        message: "Invalid PostalCode"
+*    component: {
+*      componentId1: {
+*        postalCode1 : {
+*          id: "postalCode1",
+*          message: "Invalid PostalCode"
+*        }
 *      },
-*      postalCode2: {
-*        id: "postalCode2",
-*        message: "Invalid PostalCode"
-*      }
+*      componentId12 {
+*        postalCode2 : {
+*          id: "postalCode2",
+*          message: "Invalid PostalCode"
+*        }
+*      },
 *    }
 *  }
 **/
