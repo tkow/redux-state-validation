@@ -39,8 +39,6 @@ export abstract class AbstractValidationWatcher<
     prevStateArray: Value[],
     updateValue: Value
   ): Value => {
-    console.log(ids);
-    console.log(prevStateArray);
     let result: Value = updateValue;
     while (ids.length > 0) {
       const hierarchicalObject = prevStateArray.pop();
@@ -50,18 +48,23 @@ export abstract class AbstractValidationWatcher<
         [_key]: result
       };
     }
-    console.log(result);
-    return result;
+    return {
+      ...prevStateArray.pop(),
+      ...result
+    };
   };
   public getCompositeObjectArray(keys: string[], obj: object) {
     let current = { ...obj };
-    return keys.reduce((value, nextKey) => {
-      current = current && current[nextKey];
-      if (current) {
-        return [...value, current];
-      } else {
-        return [...value, {}];
-      }
-    }, []);
+    return keys.reduce(
+      (value, nextKey) => {
+        current = current && current[nextKey];
+        if (current) {
+          return [...value, current];
+        } else {
+          return [...value, {}];
+        }
+      },
+      [current]
+    );
   }
 }

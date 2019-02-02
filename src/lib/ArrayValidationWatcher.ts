@@ -46,9 +46,9 @@ export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {
       keys = [keys];
     }
     const prevStateArray = this.getCompositeObjectArray([...keys], _result);
-    const margedArray = prevStateArray[prevStateArray.length - 1].length
-      ? prevStateArray.pop()
-      : ([] as Error[]);
+    const margedArray = Array.isArray(prevStateArray[prevStateArray.length - 1])
+      ? (prevStateArray.pop() as Error[])
+      : [];
     return this.mapIdToObject(keys, prevStateArray, [...margedArray, error]);
   };
 }

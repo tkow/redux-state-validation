@@ -149,7 +149,6 @@ test("createStaticValidator correct works with no Error", async t => {
   const validate = createStaticValidator({ state: validatorsLocal });
   store.dispatch(validate({ state: { postalCode: 123 } }));
   const result = store.getState().errors;
-  console.log(result);
   t.deepEqual(result, errors);
   t.deepEqual(result, {});
 });
@@ -405,7 +404,7 @@ test("use idSelector restructure errors id", async t => {
             message: "Invalid PostalCode"
           },
           idSelector: (errorId, action: { meta?: { id: string } }) =>
-            (action.meta && action.meta.id) || errorId,
+            (action.meta && action.meta.id) + "/" + errorId,
           validate: (_, action: any) => Number(action.value) > 100
         },
         {
@@ -414,7 +413,7 @@ test("use idSelector restructure errors id", async t => {
             message: "Invalid PostalCode"
           },
           idSelector: (errorId, action: { meta?: { id: string } }) =>
-            (action.meta && action.meta.id) || errorId,
+            (action.meta && action.meta.id) + "/" + errorId,
           validate: _ => false
         }
       ])
@@ -430,23 +429,20 @@ test("use idSelector restructure errors id", async t => {
   });
   const state = store.getState();
   t.truthy(
-    (state.errors.addidSelector as any).postalCode1.id === "postalCode1"
+    (state.errors as any)["addidSelector/postalCode1"].id === "postalCode1"
   );
   t.truthy(
-    (state.errors.addidSelector as any).postalCode2.id === "postalCode2"
+    (state.errors as any)["addidSelector/postalCode2"].id === "postalCode2"
   );
-  t.truthy(Object.keys(state.errors).length === 1);
-  t.truthy(Object.keys(state.errors.addidSelector).length === 2);
+  t.truthy(Object.keys(state.errors).length === 2);
   t.deepEqual(state.errors, {
-    addidSelector: {
-      postalCode1: {
-        id: "postalCode1",
-        message: "Invalid PostalCode"
-      },
-      postalCode2: {
-        id: "postalCode2",
-        message: "Invalid PostalCode"
-      }
+    "addidSelector/postalCode1": {
+      id: "postalCode1",
+      message: "Invalid PostalCode"
+    },
+    "addidSelector/postalCode2": {
+      id: "postalCode2",
+      message: "Invalid PostalCode"
     }
   });
 });
@@ -550,7 +546,6 @@ test("can rename errorStateId for array", async t => {
 
 test("can set action for errors", async t => {
   const action = setValidatorResults({ foo: { id: "bar", message: "error" } });
-  console.log(action);
   t.deepEqual(action, {
     payload: { foo: { id: "bar", message: "error" } },
     type: "@@REDUX_STATE_VALIDATION/SET_VALIDATIONS"

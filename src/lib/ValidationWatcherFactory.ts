@@ -96,7 +96,6 @@ export class ValidationWatcherFactory {
           const result = validators[key].reduce((_result, _validator) => {
             const invalid =
               !_validator.validate(value[key], {}) && value[key] !== undefined;
-            console.log(value[key]);
             if (invalid) {
               return this._validationWatcher.getErrorResults(
                 _result,
