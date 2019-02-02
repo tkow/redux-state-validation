@@ -33,6 +33,7 @@ test("redux state example", async t => {
           validate: name => name !== ""
         },
         {
+          afterReduce: true,
           error: {
             id: "invalidname",
             message: "Invalid name"
@@ -86,8 +87,7 @@ test("redux state example", async t => {
   });
   const state = store.getState();
 
-  t.truthy(Object.keys(state.errors).length === 2);
-  console.log(state.errors);
+  t.truthy(Object.keys(state.errors).length === 1);
   t.deepEqual(state.errors, {
     person: {
       name: {

@@ -39,20 +39,23 @@ export abstract class AbstractValidationWatcher<
     prevStateArray: Value[],
     updateValue: Value
   ): Value => {
-    let result: Value = updateValue;
+    let result: Value | { [key: string]: Value } = updateValue;
     while (ids.length > 0) {
       const hierarchicalObject = prevStateArray.pop();
       const _key: string = ids.pop();
       result = {
-        ...hierarchicalObject,
-        [_key]: result
+        [_key]: {
+          ...hierarchicalObject,
+          ...result
+        }
       };
     }
     return {
       ...prevStateArray.pop(),
       ...result
-    };
+    } as Value;
   };
+
   public getCompositeObjectArray(keys: string[], obj: object) {
     let current = { ...obj };
     return keys.reduce(
