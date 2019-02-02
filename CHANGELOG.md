@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="5.0.0"></a>
+# [5.0.0](https://github.com/tkow/redux-state-validation/compare/v4.3.0...v5.0.0) (2019-02-02)
+
+
+### Features
+
+* **all:** new feature key setting more flexible by idselector ([57c77fd](https://github.com/tkow/redux-state-validation/commit/57c77fd))
+
+
+### BREAKING CHANGES
+
+* **all:** errorId is not set default if idSelector provided
+
+
+
 <a name="4.3.0"></a>
 # [4.3.0](https://github.com/tkow/redux-state-validation/compare/v4.2.0...v4.3.0) (2019-02-01)
 

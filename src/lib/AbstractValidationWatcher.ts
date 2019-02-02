@@ -34,4 +34,40 @@ export abstract class AbstractValidationWatcher<
     error: Error,
     { validator, action }: WithErrorOptions<T, Action>
   ): ResultValue;
+  public mapIdToObject = <Key extends string, Value extends ResultValue>(
+    ids: Key[],
+    prevStateArray: Value[],
+    updateValue: Value
+  ): Value => {
+    let result: Value | { [key: string]: Value } = updateValue;
+    while (ids.length > 0) {
+      const hierarchicalObject = prevStateArray.pop();
+      const _key: string = ids.pop();
+      result = {
+        [_key]: {
+          ...hierarchicalObject,
+          ...result
+        }
+      };
+    }
+    return {
+      ...prevStateArray.pop(),
+      ...result
+    } as Value;
+  };
+
+  public getCompositeObjectArray(keys: string[], obj: object) {
+    let current = { ...obj };
+    return keys.reduce(
+      (value, nextKey) => {
+        current = current && current[nextKey];
+        if (current) {
+          return [...value, current];
+        } else {
+          return [...value, {}];
+        }
+      },
+      [current]
+    );
+  }
 }

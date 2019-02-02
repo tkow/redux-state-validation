@@ -2,7 +2,7 @@ import {
   AbstractValidationWatcher,
   InternalParams,
   WithErrorOptions
-} from "./AbstractValidationWather";
+} from "./AbstractValidationWatcher";
 import { ArrayResultValue, Error } from "./types";
 
 export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {
@@ -38,16 +38,24 @@ export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {
     error: Error,
     { validator, action }: WithErrorOptions<T, Action>
   ): ArrayResultValue => {
-    const _results = { ...results };
-    const key = validator.idSelector
+    const _result = { ...results };
+    let keys = validator.idSelector
       ? validator.idSelector(error.id, action)
       : error.id;
-    if (!_results[key]) {
-      _results[key] = [];
+    if (typeof keys === "string") {
+      keys = [keys];
     }
-    return {
-      ..._results,
-      [key]: [...(_results[key] as Error[]), error]
+    const prevStateArray = this.getCompositeObjectArray([...keys], _result);
+    const primaryId = keys.pop();
+    let nextError: ArrayResultValue = {
+      [primaryId]: [error]
     };
+    if (Array.isArray(prevStateArray[prevStateArray.length - 1])) {
+      const tempArray = prevStateArray.pop() as Error[];
+      nextError = {
+        [primaryId]: [...tempArray, error]
+      };
+    }
+    return this.mapIdToObject(keys, prevStateArray, nextError);
   };
 }
