@@ -46,7 +46,10 @@ getIncstance can recreate redux-state-validation instances have new self inner s
 
 # Examples
 
-### object case(default)
+
+### array case (default)
+
+#### WARNING: this behavior deffer to older version. So ,you need to migrate if you use older versions than 5.x.x.
 
 ```typescript
 import {
@@ -99,10 +102,12 @@ store.dispatch({ type: "SET_STRING" });
 *  {
 *     postalCode:0,
 *     hoge: {
-*       "postalCode": {
-*         id: "postalCode",
-*         message: "Invalid PostalCode"
-*       }
+*       postalCode:[
+*         {
+*           id: "postalCode",
+*           message: "Invalid PostalCode"
+*         }
+*       ]
 *     }
 *  }
 **/
@@ -120,9 +125,7 @@ store.dispatch({ type: "SET_NUMBER" });
 
 ```
 
-### array case
-
-#### WARNING: this behavior deffer to older version. So ,you need to migrate if you use older versions than 2.2.x.
+### object case
 
 ```typescript
 import {
@@ -162,9 +165,8 @@ const _validateReducer = withValidateReducer(postalReducer, [
 ]);
 
 const rootReducer = watchRootReducer(_validateReducer, {
-  errorStateId: "hoge", {
-    returnType: 'array'
-  }
+  errorStateId: "hoge",
+  returnType: 'array'
 });
 
 const store = createStore(rootReducer, { postalCode: 0 });
@@ -177,12 +179,10 @@ store.dispatch({ type: "SET_STRING" });
 *  {
 *     postalCode:0,
 *     hoge: {
-*       postalCode:[
-*         {
-*           id: "postalCode",
-*           message: "Invalid PostalCode"
-*         }
-*       ]
+*       "postalCode": {
+*         id: "postalCode",
+*         message: "Invalid PostalCode"
+*       }
 *     }
 *  }
 **/
