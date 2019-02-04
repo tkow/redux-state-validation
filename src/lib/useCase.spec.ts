@@ -16,7 +16,7 @@ const nameReducer = (name: string = "", action: any) => {
   return name;
 };
 
-test("redux state example", async t => {
+test("redux state usage example object mode", async t => {
   const rootReducer = watchRootReducer(
     combineReducers({
       name: withValidateReducer(nameReducer, [
@@ -74,7 +74,10 @@ test("redux state example", async t => {
           validate: (state, _action: any) => state >= 100
         }
       ])
-    })
+    }),
+    {
+      returnType: "object"
+    }
   );
   const store = createStore(rootReducer, { name: "foo", number: 0 });
   store.dispatch({
@@ -106,6 +109,100 @@ test("redux state example", async t => {
           message: "Invalid number"
         }
       }
+    }
+  });
+});
+
+test("redux state usage example array mode", async t => {
+  const rootReducer = watchRootReducer(
+    combineReducers({
+      name: withValidateReducer(nameReducer, [
+        {
+          afterReduce: true,
+          error: {
+            id: "emptyname",
+            message: "empty Name"
+          },
+          idSelector: (_errorId, _action: { meta?: { id: string } }) => [
+            "person",
+            "name"
+          ],
+          validate: name => name !== ""
+        },
+        {
+          afterReduce: true,
+          error: {
+            id: "invalidname",
+            message: "Invalid name"
+          },
+          idSelector: (_errorId, _action: { meta?: { id: string } }) => [
+            "person",
+            "name"
+          ],
+          validate: (name, _action: any) => {
+            return name.length > 0;
+          }
+        }
+      ]),
+      number: withValidateReducer(numberReducer, [
+        {
+          error: {
+            id: "zero",
+            message: "zero is forbidden"
+          },
+          idSelector: (_errorId, _action: { meta?: { id: string } }) => [
+            "person",
+            "number"
+          ],
+          validate: state => state !== 0
+        },
+        {
+          error: {
+            id: "lessthanhundred",
+            message: "Invalid number"
+          },
+          idSelector: (_errorId, _action: { meta?: { id: string } }) => [
+            "person",
+            "number"
+          ],
+          validate: (state, _action: any) => state >= 100
+        }
+      ])
+    }),
+    {
+      returnType: "array"
+    }
+  );
+  const store = createStore(rootReducer, { name: "foo", number: 0 });
+  store.dispatch({
+    payload: 50,
+    type: "SET_NUMBER"
+  });
+  store.dispatch({
+    payload: "",
+    type: "SET_NAME"
+  });
+  const state = store.getState();
+
+  t.truthy(Object.keys(state.errors).length === 1);
+  t.deepEqual(state.errors, {
+    person: {
+      name: [
+        {
+          id: "emptyname",
+          message: "empty Name"
+        },
+        {
+          id: "invalidname",
+          message: "Invalid name"
+        }
+      ],
+      number: [
+        {
+          id: "lessthanhundred",
+          message: "Invalid number"
+        }
+      ]
     }
   });
 });
