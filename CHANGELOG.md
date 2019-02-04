@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="6.0.0"></a>
+# [6.0.0](https://github.com/tkow/redux-state-validation/compare/v4.3.0...v6.0.0) (2019-02-04)
+
+
+### Bug Fixes
+
+* default set array is are enabled ([2a37281](https://github.com/tkow/redux-state-validation/commit/2a37281))
+* **ArrayValidationWatcher.ts:** fix bug: invalid hierarchical mapping ([378b509](https://github.com/tkow/redux-state-validation/commit/378b509))
+
+
+### Features
+
+* **ValidationWatcherFactroy.ts:** change default object mode to array mode ([b0e9170](https://github.com/tkow/redux-state-validation/commit/b0e9170))
+
+
+* recentry release branch (#24) ([7b14781](https://github.com/tkow/redux-state-validation/commit/7b14781)), closes [#24](https://github.com/tkow/redux-state-validation/issues/24)
+
+
+### BREAKING CHANGES
+
+* **ValidationWatcherFactroy.ts:** change default object mode to array mode
+* **ArrayValidationWatcher.ts:** array mode is correct
+* errorId is not set default if idSelector provided
+
+* add test case
+
+* fix(fix state hierarchy wrong bug):
+
+* chore(release): 5.0.0
+
+
+
 <a name="5.0.0"></a>
 # [5.0.0](https://github.com/tkow/redux-state-validation/compare/v4.3.0...v5.0.0) (2019-02-02)
 

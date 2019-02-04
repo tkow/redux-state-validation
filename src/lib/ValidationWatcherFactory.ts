@@ -22,7 +22,7 @@ export interface Reducer<State extends {}, Action extends ReduxAction> {
 
 const defaultConfig = {
   errorStateId: "errors",
-  returnType: "object"
+  returnType: "array"
 };
 
 function partition(array, isValid) {
@@ -132,7 +132,7 @@ export class ValidationWatcherFactory {
     State extends {},
     Action extends ReduxAction,
     Key extends string = "errors",
-    TReturnType extends ReturnType = "object"
+    TReturnType extends ReturnType = "array"
   >(
     reducer: Reducer<State, Action>,
     config: Config<Key, TReturnType> = {}

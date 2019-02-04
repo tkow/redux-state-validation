@@ -5,7 +5,7 @@
     "email": "t.kusama06130220@gmail.com",
     "url": "https://twitter.com/tkow39"
   },
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "add validator to reducer result handy",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",

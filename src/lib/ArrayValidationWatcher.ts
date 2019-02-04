@@ -47,15 +47,12 @@ export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {
     }
     const prevStateArray = this.getCompositeObjectArray([...keys], _result);
     const primaryId = keys.pop();
-    let nextError: ArrayResultValue = {
-      [primaryId]: [error]
+    const prevValue = prevStateArray.pop();
+    const nextError: ArrayResultValue = {
+      [primaryId]: Array.isArray(prevValue)
+        ? [...(prevValue as Error[]), error]
+        : [error]
     };
-    if (Array.isArray(prevStateArray[prevStateArray.length - 1])) {
-      const tempArray = prevStateArray.pop() as Error[];
-      nextError = {
-        [primaryId]: [...tempArray, error]
-      };
-    }
     return this.mapIdToObject(keys, prevStateArray, nextError);
   };
 }
