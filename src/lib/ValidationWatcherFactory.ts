@@ -22,7 +22,7 @@ export interface Reducer<State extends {}, Action extends ReduxAction> {
 
 const defaultConfig = {
   errorStateId: "errors",
-  returnType: "object"
+  returnType: "array"
 };
 
 function partition(array, isValid) {

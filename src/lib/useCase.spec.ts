@@ -168,10 +168,7 @@ test("redux state usage example array mode", async t => {
           validate: (state, _action: any) => state >= 100
         }
       ])
-    }),
-    {
-      returnType: "array"
-    }
+    })
   );
   const store = createStore(rootReducer, { name: "foo", number: 0 });
   store.dispatch({
