@@ -66,7 +66,8 @@ test("initial state not filter if the condition is invalid", async t => {
           validate: _state => Number(_state) > 100
         }
       ])
-    })
+    }),
+    { returnType: "object" }
   );
   const store = createStore(rootReducer);
   const state = store.getState();
@@ -90,7 +91,8 @@ test("whether combineReducers can validate for object", async t => {
     combineReducers({
       me: identityReducer,
       postalState: _validateNestReducer
-    })
+    }),
+    { returnType: "object" }
   );
   const store = createStore(rootReducer, {
     me: "me",
@@ -113,7 +115,9 @@ test("whether combineReducers can validate for object", async t => {
 });
 
 test("createStaticValidator correct works with Error", async t => {
-  const rootReducer = watchRootReducer(_validateReducer);
+  const rootReducer = watchRootReducer(_validateReducer, {
+    returnType: "object"
+  });
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_STRING" });
   const errors = store.getState().errors;
@@ -133,7 +137,9 @@ test("createStaticValidator correct works with Error", async t => {
 });
 
 test("createStaticValidator correct works with no Error", async t => {
-  const rootReducer = watchRootReducer(_validateReducer);
+  const rootReducer = watchRootReducer(_validateReducer, {
+    returnType: "object"
+  });
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_NUMBER" });
   const errors = store.getState().errors;
@@ -154,7 +160,9 @@ test("createStaticValidator correct works with no Error", async t => {
 });
 
 test("create validation single reducer object", async t => {
-  const rootReducer = watchRootReducer(_validateReducer);
+  const rootReducer = watchRootReducer(_validateReducer, {
+    returnType: "object"
+  });
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_STRING" });
   let state = store.getState();
@@ -250,7 +258,8 @@ test("use action withValidator", async t => {
           validate: (_, action: any) => Number(action.value) > 100
         }
       ])
-    })
+    }),
+    { returnType: "object" }
   );
   const store = createStore(rootReducer);
   store.dispatch({
@@ -293,7 +302,8 @@ test("action validations run before reducers execution and return state soon if 
           validate: _ => false
         }
       ])
-    })
+    }),
+    { returnType: "object" }
   );
   const store = createStore(rootReducer);
   store.dispatch({
@@ -332,7 +342,8 @@ test("use afterReduce if need get all errors set validation", async t => {
           validate: _ => false
         }
       ])
-    })
+    }),
+    { returnType: "object" }
   );
   const store = createStore(rootReducer);
   store.dispatch({
@@ -372,7 +383,8 @@ test("if useing strict option of validator, result are set by payload ", async t
           validate: (_, _action: any) => false
         }
       ])
-    })
+    }),
+    { returnType: "object" }
   );
   const store = createStore(rootReducer);
   store.dispatch({
@@ -417,7 +429,8 @@ test("use idSelector restructure errors id", async t => {
           validate: _ => false
         }
       ])
-    })
+    }),
+    { returnType: "object" }
   );
   const store = createStore(rootReducer);
   store.dispatch({
@@ -505,7 +518,8 @@ test("use idSelector restructure errors id for array", async t => {
 
 test("can rename errorStateId for object", async t => {
   const rootReducer = watchRootReducer(_validateReducer, {
-    errorStateId: "hoge"
+    errorStateId: "hoge",
+    returnType: "object"
   });
   const store = createStore(rootReducer, { postalCode: 0 });
   store.dispatch({ type: "SET_STRING" });
