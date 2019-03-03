@@ -202,8 +202,6 @@ store.dispatch({ type: "SET_NUMBER" });
 
 # action validation
 
-we prepare new feature equlls and more than 2.1.0 if the second argument specific your validator it verify the payload like that
-
 ```typescript
 const rootReducer = watchRootReducer(
     combineReducers({
