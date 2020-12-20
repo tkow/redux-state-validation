@@ -3,6 +3,7 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { handleActions } from "redux-actions";
 import { isNumber } from "util";
 import {
+  combineErrorsReducers,
   createMiddleware,
   createValidateReducer,
   validateActionCreater
@@ -38,7 +39,10 @@ const initialStateUndefinedReducer = handleActions(
   0
 );
 
-const identityReducer = (state: string = "hoge", action: { value: string }) => {
+const identityReducer = (
+  state: string = "hoge",
+  action: { type: string; value: string }
+) => {
   return action && action.value ? action.value : state;
 };
 
@@ -491,4 +495,76 @@ test("middleware auto validate action dispatch", async t => {
   store.dispatch({ type: "SET_NUMBER" });
   state = store.getState();
   t.truthy(Object.keys(state.errors).length === 0);
+});
+
+test("combine errorReducers", async t => {
+  const _validateNestReducer = createValidateReducer(
+    postalReducer,
+    [
+      {
+        error: {
+          id: "postalCode",
+          message: "Invalid PostalCode"
+        },
+        validate: _state => {
+          return isNumber(_state.postalCode);
+        }
+      }
+    ],
+    { returnType: "object" }
+  );
+
+  const _validateMeReducer = createValidateReducer(
+    identityReducer,
+    [
+      {
+        error: {
+          id: "postalCode",
+          message: "Invalid PostalCode"
+        },
+        validate: _state => {
+          return !!_state;
+        }
+      }
+    ],
+    { returnType: "object" }
+  );
+
+  const rootReducer = combineReducers({
+    errors: combineErrorsReducers({
+      me: _validateMeReducer,
+      postalState: _validateNestReducer
+    }),
+    me: _validateMeReducer,
+    postalState: _validateNestReducer
+  });
+
+  const store = createStore(
+    rootReducer,
+    {
+      errors: {},
+      me: "me",
+      postalState: {
+        postalCode: 0 as number
+      }
+    },
+    applyMiddleware(createMiddleware())
+  );
+  store.dispatch({ type: "SET_STRING" });
+  let state = store.getState();
+  t.truthy(Object.keys(state.errors.postalState).length === 1);
+  t.truthy(Object.keys(state.errors.me).length === 0);
+  t.deepEqual(state.errors, {
+    me: {},
+    postalState: {
+      postalCode: {
+        id: "postalCode",
+        message: "Invalid PostalCode"
+      }
+    }
+  });
+  store.dispatch({ type: "SET_NUMBER" });
+  state = store.getState();
+  t.truthy(Object.keys(state.errors.postalState).length === 0);
+  t.truthy(Object.keys(state.errors.me).length === 0);
 });
