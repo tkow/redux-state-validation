@@ -24,7 +24,8 @@ This library for react-native rather than react, but we aim to seemless reuse re
 npm i --save redux-state-validation
 ```
 
-stable versions equals or newer than 6.0.0.
+we broke compatibility completely from version 7.0.0.
+If you want to use older versions, stable versions equals or newer than 6.0.0.
 
 # Usage
 
