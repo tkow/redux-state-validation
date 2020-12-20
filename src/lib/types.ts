@@ -15,11 +15,7 @@ export interface Validator<T, Action = ReduxAction> {
   validate(state: T, action?: Action): boolean;
 }
 
-export type RecursiveArrayType = Error[] | { [id: string]: RecursiveArrayType };
-
-export interface ArrayResultValue {
-  [id: string]: RecursiveArrayType;
-}
+export type ArrayResultValue = Error[];
 
 export type RecursiveObjectType = Error | { [id: string]: RecursiveObjectType };
 
