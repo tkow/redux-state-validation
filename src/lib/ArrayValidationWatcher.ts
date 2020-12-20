@@ -29,8 +29,11 @@ export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {
 
   public nextErrors = (): ArrayResultValue => {
     const _result = Object.assign({}, this.internal.results);
-    this.internal.results = {};
     return _result;
+  };
+
+  public resetErrors = () => {
+    this.internal.results = {};
   };
 
   public getErrorResults = <T, Action>(

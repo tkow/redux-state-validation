@@ -28,6 +28,8 @@ export abstract class AbstractValidationWatcher<
     { validator, action }: WithErrorOptions<T, Action>
   ) => void;
   public abstract nextErrors: () => ResultValue;
+
+  public abstract resetErrors: () => void;
   protected abstract internal: InternalParams<Type>;
   public abstract getErrorResults<T, Action>(
     results: ResultValue,
