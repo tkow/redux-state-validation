@@ -72,12 +72,12 @@
     "opn-cli": "^3.1.0",
     "prettier": "^1.14.3",
     "redux-actions": "^2.6.4",
-    "standard-version": "^4.4.0",
+    "standard-version": "^9.0.0",
     "trash-cli": "^1.4.0",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-immutable": "^4.7.0",
-    "typedoc": "^0.13.0",
+    "typedoc": "^0.19.2",
     "typescript": "^4.1.3"
   },
   "peerDependencies": {
