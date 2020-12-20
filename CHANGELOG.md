@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="7.0.1"></a>
+## [7.0.1](https://github.com/tkow/redux-state-validation/compare/v7.0.0...v7.0.1) (2020-12-20)
+
+
+### Bug Fixes
+
+* coverage ([064f910](https://github.com/tkow/redux-state-validation/commit/064f910))
+
+
+
 <a name="7.0.0"></a>
 # [7.0.0](https://github.com/tkow/redux-state-validation/compare/v4.3.0...v7.0.0) (2020-12-20)
 
