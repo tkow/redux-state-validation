@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.1.0](https://github.com/tkow/redux-state-validation/compare/v7.0.2...v7.1.0) (2020-12-20)
+
+
+### Features
+
+* array mapping change ([1cda991](https://github.com/tkow/redux-state-validation/commit/1cda9917c5acc89a21e0e932cf0bb7685cbf5346))
+
+
+### Bug Fixes
+
+* array pattern change ([cead387](https://github.com/tkow/redux-state-validation/commit/cead387753429c6e2582994f08d6c7342eb1b269))
+
 ### [7.0.2](https://github.com/tkow/redux-state-validation/compare/v7.0.1...v7.0.2) (2020-12-20)
 
 
