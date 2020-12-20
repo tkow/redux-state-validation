@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="7.0.0"></a>
+# [7.0.0](https://github.com/tkow/redux-state-validation/compare/v4.3.0...v7.0.0) (2020-12-20)
+
+
+### Bug Fixes
+
+* combineErrorsReducers test ([f29756e](https://github.com/tkow/redux-state-validation/commit/f29756e))
+
+
+### Features
+
+* new single error reducer combine ([5d0661b](https://github.com/tkow/redux-state-validation/commit/5d0661b))
+
+
+* Hotfix/array mode (#26) ([dec70bc](https://github.com/tkow/redux-state-validation/commit/dec70bc)), closes [#26](https://github.com/tkow/redux-state-validation/issues/26)
+* recentry release branch (#24) ([7b14781](https://github.com/tkow/redux-state-validation/commit/7b14781)), closes [#24](https://github.com/tkow/redux-state-validation/issues/24)
+
+
+### BREAKING CHANGES
+
+* array mode is correct
+
+* feat(ValidationWatcherFactroy.ts): change default object mode to array mode
+* change default object mode to array mode
+
+* fix: default set array is are enabled
+
+* chore(release): 6.0.0
+
+* docs: decribe about change default behavior
+* errorId is not set default if idSelector provided
+
+* add test case
+
+* fix(fix state hierarchy wrong bug):
+
+* chore(release): 5.0.0
+
+
+
 <a name="6.0.0"></a>
 # [6.0.0](https://github.com/tkow/redux-state-validation/compare/v4.3.0...v6.0.0) (2019-02-04)
 
