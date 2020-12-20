@@ -1,6 +1,14 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [7.0.2](https://github.com/tkow/redux-state-validation/compare/v7.0.1...v7.0.2) (2020-12-20)
+
+
+### Bug Fixes
+
+* npm audit ([7212972](https://github.com/tkow/redux-state-validation/commit/7212972db215b5b70b46cc66e16216fbfe2d875b))
+* standard-version ([c6a83e9](https://github.com/tkow/redux-state-validation/commit/c6a83e9f9279a0d9943967f7c131ba617501af2d))
 
 <a name="7.0.1"></a>
 ## [7.0.1](https://github.com/tkow/redux-state-validation/compare/v7.0.0...v7.0.1) (2020-12-20)
