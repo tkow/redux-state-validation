@@ -12,50 +12,32 @@ export class ArrayValidationWatcher extends AbstractValidationWatcher<"array"> {
     super();
     this.internal = {
       ...internal,
-      results: {}
+      results: []
     };
   }
 
   public withError = <T, Action>(
     error: Error,
-    withErrorOptions: WithErrorOptions<T, Action>
+    _withErrorOptions: WithErrorOptions<T, Action>
   ): void => {
-    this.internal.results = this.getErrorResults(
-      this.internal.results,
-      error,
-      withErrorOptions
-    );
+    this.internal.results = this.getErrorResults(this.internal.results, error);
   };
 
   public nextErrors = (): ArrayResultValue => {
-    const _result = Object.assign({}, this.internal.results);
+    const _result = [...this.internal.results];
     return _result;
   };
 
   public resetErrors = () => {
-    this.internal.results = {};
+    this.internal.results = [];
   };
 
-  public getErrorResults = <T, Action>(
+  public getErrorResults = (
     results: ArrayResultValue,
-    error: Error,
-    { validator, action }: WithErrorOptions<T, Action>
+    error: Error
   ): ArrayResultValue => {
-    const _result = { ...results };
-    let keys = validator.idSelector
-      ? validator.idSelector(error.id, action)
-      : error.id;
-    if (typeof keys === "string") {
-      keys = [keys];
-    }
-    const prevStateArray = this.getCompositeObjectArray([...keys], _result);
-    const primaryId = keys.pop();
-    const prevValue = prevStateArray.pop();
-    const nextError: ArrayResultValue = {
-      [primaryId]: Array.isArray(prevValue)
-        ? [...(prevValue as Error[]), error]
-        : [error]
-    };
-    return this.mapIdToObject(keys, prevStateArray, nextError);
+    const _result = [...results];
+    const nextError: ArrayResultValue = [...(_result as Error[]), error];
+    return nextError;
   };
 }

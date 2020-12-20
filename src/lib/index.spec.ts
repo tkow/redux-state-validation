@@ -133,7 +133,9 @@ test("whether combineReducers can validate for array", async t => {
     { returnType: "array" }
   );
   const rootReducer = combineReducers({
-    errors: _validateNestReducer.validateReducer,
+    errors: combineErrorsReducers({
+      postalCode: _validateNestReducer
+    }),
     me: identityReducer,
     postalState: _validateNestReducer
   });
@@ -160,7 +162,7 @@ test("whether combineReducers can validate for array", async t => {
   store.dispatch({ type: "SET_NUMBER" });
   store.dispatch(validateActionCreater());
   state = store.getState();
-  t.truthy(Object.keys(state.errors).length === 0);
+  t.truthy(Object.keys(state.errors.postalCode).length === 0);
 });
 
 test("use action withValidator", async t => {
