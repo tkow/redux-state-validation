@@ -12,7 +12,7 @@ This library for react-native rather than react, but we aim to seemless reuse re
 
 # Demo
 
-[codesandbox](https://codesandbox.io/embed/k2nr45onwr?fontsize=14)
+[codesandbox](https://codesandbox.io/s/angry-gareth-8gwvm?fontsize=14&hidenavigation=1&theme=dark)
 
 <p align="center">
   <img src="https://raw.github.com/wiki/tkow/redux-state-validation/images/demo/rsv-example.gif" />
