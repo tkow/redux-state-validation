@@ -29,6 +29,80 @@ If you want to use older versions, stable versions equals or newer than 6.0.0.
 
 # Usage
 
+array type pattern
+
+```typescript
+import {
+  combineErrorsReducers,
+  createMiddleware,
+  createValidateReducer
+} from "redux-state-validation";
+
+const exampleReducer = (
+  state: string = "foo",
+  action: { type: string; value: string }
+) => {
+  if(action.type === 'EXAMPLE')
+    return action && action.value ? action.value : state;
+};
+
+const foo = createValidateReducer(
+  exampleReducer,
+  [
+    {
+      error: {
+        id: "invalid-state-foo",
+        message: "Invalid State"
+      },
+      validate: _state => {
+        return _state !== 'foo'
+      }
+    }
+  ]
+);
+
+const store = createStore(
+  combineReducers({
+    foo: foo
+    errors: combineErrorsReducers({
+      foo
+    })
+    // or explicitly
+    // errors: combineReducers({
+    //  foo: foo.validateReducer
+    // })
+    // you can compose foo.validateReducer as you like
+  }),
+  {
+    errors: {},
+    foo: 'foo'
+  },
+  applyMiddleware(createMiddleware())
+);
+
+store.dispatch({
+  type: 'Example',
+  value: 'bar'
+})
+
+const errors = store.getState().errors
+console.log(JSON.stringify(errors, null, 2))
+
+/**
+ * {
+ *   "foo": [{
+ *     "invalid-state-foo": {
+ *       "id": "invalid-state-foo",
+ *       "mesage": "Invalid State"
+ *     }]
+ *   }
+ * }
+ */
+
+```
+
+object type pattern
+
 ```typescript
 import {
   combineErrorsReducers,
