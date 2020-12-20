@@ -1,7 +1,8 @@
 export {
-  withValidateReducer,
-  watchRootReducer,
   Error,
   Validator,
-  ValidationWatcherFactory
+  createMiddleware,
+  validateActionCreater,
+  combineErrorsReducers,
+  createValidateReducer
 } from "./lib";

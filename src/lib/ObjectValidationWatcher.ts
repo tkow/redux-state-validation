@@ -31,8 +31,11 @@ export class ObjectValidationWatcher extends AbstractValidationWatcher<
 
   public nextErrors = (): ObjectResultValue => {
     const _result = Object.assign({}, this.internal.results);
-    this.internal.results = {};
     return _result;
+  };
+
+  public resetErrors = () => {
+    this.internal.results = {};
   };
 
   public getErrorResults = <T, Action>(
