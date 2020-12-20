@@ -132,9 +132,9 @@ class ValidationWatcherFactory {
     this.setWatcherInstance(returnType);
     this._initialized = true;
     return (
-      _state: WithValidatorState<TErrorsType> = {} as WithValidatorState<
-        TErrorsType
-      >,
+      _state: WithValidatorState<TErrorsType> = config.returnType === "object"
+        ? ({} as WithValidatorState<TErrorsType>)
+        : ([] as WithValidatorState<TErrorsType>),
       action: Action
     ): WithValidatorState<TErrorsType> => {
       switch (action.type) {
